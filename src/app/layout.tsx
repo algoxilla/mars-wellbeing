@@ -1,3 +1,4 @@
+import React, { Suspense } from "react";
 import type { Metadata } from "next";
 import { Barlow_Condensed, Montserrat } from "next/font/google";
 import "./globals.css";
@@ -49,7 +50,9 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col bg-[#F5F0E7] text-[#1D3033] font-sans selection:bg-[#1D3033] selection:text-[#F5F0E7]">
         <CrisisBar />
-        <Header />
+        <Suspense fallback={<div className="h-20 bg-[#F5F0E7]/95 border-b border-[#E2DDD5]" />}>
+          <Header />
+        </Suspense>
         <main className="flex-1 flex flex-col">{children}</main>
         <Footer />
       </body>
