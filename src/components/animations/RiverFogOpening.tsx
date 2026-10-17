@@ -186,26 +186,28 @@ export function RiverFogOpening() {
 
       {/* 4. Non-intrusive Ambient Controls (Skip / Replay) */}
       <div className="absolute top-5 right-5 sm:top-7 sm:right-8 z-30 flex items-center gap-2">
-        {isAnimationActive && !isReducedMotion ? (
-          <button
-            type="button"
-            onClick={handleSkip}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-[#1D3033] bg-[#FAF7F2]/90 hover:bg-[#FAF7F2] border border-[#E2DDD5] shadow-xs rounded-xs transition-all backdrop-blur-xs"
-            aria-label="Skip morning atmosphere opening"
-          >
-            <span>Skip opening</span>
-            <X className="w-3.5 h-3.5 text-[#6E8E7E]" />
-          </button>
-        ) : (
-          <button
-            type="button"
-            onClick={handleReplay}
-            className="inline-flex items-center gap-1.5 px-3 py-1 text-xs font-medium text-[#3D5255] hover:text-[#1D3033] bg-[#FAF7F2]/80 hover:bg-[#FAF7F2] border border-[#E2DDD5] rounded-xs transition-all shadow-2xs"
-            title="Replay morning atmosphere"
-          >
-            <RotateCcw className="w-3 h-3 text-[#6E8E7E]" />
-            <span className="hidden sm:inline">Replay atmosphere</span>
-          </button>
+        {hasMounted && !isReducedMotion && (
+          isAnimationActive ? (
+            <button
+              type="button"
+              onClick={handleSkip}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-[#1D3033] bg-[#FAF7F2]/90 hover:bg-[#FAF7F2] border border-[#E2DDD5] shadow-xs rounded-xs transition-all backdrop-blur-xs"
+              aria-label="Skip morning atmosphere opening"
+            >
+              <span>Skip opening</span>
+              <X className="w-3.5 h-3.5 text-[#6E8E7E]" />
+            </button>
+          ) : (
+            <button
+              type="button"
+              onClick={handleReplay}
+              className="inline-flex items-center gap-1.5 px-3 py-1 text-xs font-medium text-[#3D5255] hover:text-[#1D3033] bg-[#FAF7F2]/80 hover:bg-[#FAF7F2] border border-[#E2DDD5] rounded-xs transition-all shadow-2xs"
+              title="Replay morning atmosphere"
+            >
+              <RotateCcw className="w-3 h-3 text-[#6E8E7E]" />
+              <span className="hidden sm:inline">Replay atmosphere</span>
+            </button>
+          )
         )}
       </div>
 

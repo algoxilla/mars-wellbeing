@@ -9,7 +9,7 @@ import { ChevronDown, ChevronUp, Search, HelpCircle, ArrowRight } from "lucide-r
 export default function FAQPage() {
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
   const [searchQuery, setSearchQuery] = useState<string>("");
-  const [openIndex, setOpenIndex] = useState<number | null>(0);
+  const [openQuestion, setOpenQuestion] = useState<string | null>(FAQ_DATA[0]?.question || null);
 
   const categories = [
     "All",
@@ -30,8 +30,8 @@ export default function FAQPage() {
     return matchesCategory && matchesQuery;
   });
 
-  const toggleAccordion = (index: number) => {
-    setOpenIndex(openIndex === index ? null : index);
+  const toggleAccordion = (question: string) => {
+    setOpenQuestion(openQuestion === question ? null : question);
   };
 
   return (
@@ -87,8 +87,8 @@ export default function FAQPage() {
           {/* Accordion List */}
           <div className="space-y-4">
             {filteredFaqs.length > 0 ? (
-              filteredFaqs.map((faq, index) => {
-                const isOpen = openIndex === index;
+              filteredFaqs.map((faq) => {
+                const isOpen = openQuestion === faq.question;
                 return (
                   <div
                     key={faq.question}
@@ -96,7 +96,7 @@ export default function FAQPage() {
                   >
                     <button
                       type="button"
-                      onClick={() => toggleAccordion(index)}
+                      onClick={() => toggleAccordion(faq.question)}
                       className="w-full p-5 sm:p-6 text-left flex items-center justify-between gap-4 focus:outline-none"
                     >
                       <div>

@@ -18,6 +18,7 @@ import {
 export default function GuidedExperiencePage() {
   const [reflectionText, setReflectionText] = useState("");
   const [isSavedLocally, setIsSavedLocally] = useState(false);
+  const [isCleared, setIsCleared] = useState(false);
 
   useEffect(() => {
     const saved = localStorage.getItem("mars_hikari_stage_01_note");
@@ -30,6 +31,13 @@ export default function GuidedExperiencePage() {
     localStorage.setItem("mars_hikari_stage_01_note", reflectionText);
     setIsSavedLocally(true);
     setTimeout(() => setIsSavedLocally(false), 3000);
+  };
+
+  const handleClear = () => {
+    localStorage.removeItem("mars_hikari_stage_01_note");
+    setReflectionText("");
+    setIsCleared(true);
+    setTimeout(() => setIsCleared(false), 3000);
   };
 
   return (
@@ -97,18 +105,37 @@ export default function GuidedExperiencePage() {
 
               <div className="flex flex-wrap items-center justify-between gap-4 pt-2">
                 <div className="flex items-center gap-2 text-xs text-[#4A6E5D]">
-                  <Lock className="w-3.5 h-3.5" />
-                  <span>Stored securely on your browser only. Never transmitted.</span>
+                  <Lock className="w-3.5 h-3.5 shrink-0" />
+                  <span>
+                    {isCleared
+                      ? "Reflection cleared from device."
+                      : isSavedLocally
+                      ? "Saved locally in your browser storage."
+                      : "Stored securely on your browser only (localStorage)."}
+                  </span>
                 </div>
 
-                <button
-                  type="button"
-                  onClick={handleSave}
-                  className="inline-flex items-center gap-2 px-5 py-2.5 text-xs font-semibold uppercase tracking-wider bg-[#1D3033] text-[#F5F0E7] hover:bg-[#284145] transition-all"
-                >
-                  <Save className="w-3.5 h-3.5 text-[#8FA89B]" />
-                  <span>{isSavedLocally ? "Saved to Device!" : "Save Reflection"}</span>
-                </button>
+                <div className="flex items-center gap-2">
+                  {reflectionText.length > 0 && (
+                    <button
+                      type="button"
+                      onClick={handleClear}
+                      className="px-3.5 py-2 text-xs font-semibold uppercase tracking-wider text-[#C26D53] hover:text-[#9E4F39] hover:bg-[#FAF7F2] border border-[#E2DDD5] transition-all"
+                      title="Clear saved text from your browser"
+                    >
+                      Clear
+                    </button>
+                  )}
+
+                  <button
+                    type="button"
+                    onClick={handleSave}
+                    className="inline-flex items-center gap-2 px-5 py-2 text-xs font-semibold uppercase tracking-wider bg-[#1D3033] text-[#F5F0E7] hover:bg-[#284145] transition-all"
+                  >
+                    <Save className="w-3.5 h-3.5 text-[#8FA89B]" />
+                    <span>{isSavedLocally ? "Saved!" : "Save to Device"}</span>
+                  </button>
+                </div>
               </div>
             </div>
           </div>

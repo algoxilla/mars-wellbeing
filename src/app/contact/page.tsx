@@ -88,12 +88,24 @@ export default function ContactPage() {
               {isSent ? (
                 <div className="p-10 bg-[#F5F0E7] border border-[#6E8E7E] text-center space-y-4 animate-in fade-in">
                   <CheckCircle2 className="w-10 h-10 text-[#4A6E5D] mx-auto" />
+                  <div className="inline-flex items-center gap-1.5 px-3 py-1 text-[10px] font-bold uppercase tracking-wider bg-[#EAE3D6] text-[#3D5255] border border-[#DCD5C9]">
+                    Simulated Submission — Phase 1 Preview
+                  </div>
                   <h3 className="font-display text-2xl font-bold uppercase text-[#1D3033]">
-                    Message Received
+                    Demonstration Message Received
                   </h3>
                   <p className="text-sm text-[#3D5255] leading-relaxed">
-                    Thank you, {name}. Your inquiry regarding <strong>{category}</strong> has been logged. Our team will follow up via {email}.
+                    Thank you, <strong>{name}</strong>. Your inquiry regarding <strong>{category}</strong> has been validated locally. <em>Please note:</em> In this Phase 1 preview, this form is simulated on your device. Live server dispatch and email delivery will be connected in Phase 2.
                   </p>
+                  <div className="pt-2">
+                    <button
+                      type="button"
+                      onClick={() => setIsSent(false)}
+                      className="px-5 py-2.5 text-xs font-semibold uppercase tracking-wider bg-[#FAF7F2] text-[#1D3033] hover:bg-[#EAE3D6] border border-[#E2DDD5] transition-colors"
+                    >
+                      Send Another Message / Test Again
+                    </button>
+                  </div>
                 </div>
               ) : (
                 <form

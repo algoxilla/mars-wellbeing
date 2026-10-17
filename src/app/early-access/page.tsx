@@ -58,35 +58,52 @@ export default function EarlyAccessPage() {
       <section className="py-20 bg-[#F5F0E7] border-b border-[#E2DDD5]">
         <div className="max-w-xl mx-auto px-4 sm:px-6 lg:px-8">
           {isSubmitted ? (
-            /* Success Confirmation State */
+            /* Simulated Confirmation State */
             <div className="p-8 sm:p-12 bg-[#FAF7F2] border border-[#6E8E7E] text-center space-y-6 animate-in fade-in duration-300">
               <div className="w-14 h-14 bg-[#EAF1ED] text-[#4A6E5D] rounded-full mx-auto flex items-center justify-center">
                 <CheckCircle2 className="w-8 h-8" />
               </div>
 
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 text-[10px] font-bold uppercase tracking-wider bg-[#EAE3D6] text-[#3D5255] border border-[#DCD5C9]">
+                Simulated Submission — Phase 1 Preview
+              </div>
+
               <h2 className="font-display text-3xl font-bold uppercase text-[#1D3033]">
-                You Are on the List, {fullName.split(" ")[0]}.
+                Demonstration Request Received
               </h2>
 
               <p className="text-sm text-[#3D5255] leading-relaxed">
-                We have registered your interest for the <strong>Bengaluru initial cohort</strong>. A confirmation will be sent to <strong>{email}</strong> when your invitation opens.
+                Thank you for testing the early-access flow, <strong>{fullName}</strong>. <em>Please note:</em> In this Phase 1 preview, this submission is <strong>simulated locally on your device</strong>. No data has been saved to a live database, and no confirmation email has been dispatched yet.
               </p>
 
               <div className="p-4 bg-[#F5F0E7] border border-[#E2DDD5] text-xs text-[#3D5255] text-left space-y-2">
+                <p>
+                  <strong className="text-[#1D3033]">Inputted Email:</strong> {email} (Not transmitted)
+                </p>
                 <p>
                   <strong className="text-[#1D3033]">Selected Spaces:</strong> {selectedInterests.join(", ")}
                 </p>
                 <p>
                   <strong className="text-[#1D3033]">City:</strong> {city}
                 </p>
+                <p className="text-[11px] text-[#4A6E5D] pt-1 font-medium">
+                  ✓ Form validation & field states verified. Real database persistence will be activated in Phase 2.
+                </p>
               </div>
 
-              <div className="pt-2">
+              <div className="pt-2 flex flex-wrap justify-center gap-3">
+                <button
+                  type="button"
+                  onClick={() => setIsSubmitted(false)}
+                  className="px-5 py-2.5 text-xs font-semibold uppercase tracking-wider bg-[#F5F0E7] text-[#1D3033] hover:bg-[#EAE3D6] border border-[#E2DDD5] transition-colors"
+                >
+                  Edit / Test Again
+                </button>
                 <Link
                   href="/nova-hikari"
-                  className="inline-flex items-center gap-2 px-6 py-3 text-xs font-semibold uppercase tracking-wider bg-[#1D3033] text-[#F5F0E7] hover:bg-[#284145] transition-colors"
+                  className="inline-flex items-center gap-2 px-6 py-2.5 text-xs font-semibold uppercase tracking-wider bg-[#1D3033] text-[#F5F0E7] hover:bg-[#284145] transition-colors"
                 >
-                  <span>Explore Nova Hikari While You Wait</span>
+                  <span>Explore Nova Hikari</span>
                   <ArrowRight className="w-3.5 h-3.5 text-[#8FA89B]" />
                 </Link>
               </div>
