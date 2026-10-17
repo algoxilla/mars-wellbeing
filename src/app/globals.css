@@ -3,20 +3,30 @@
 @theme {
   --color-ivory: #F5F0E7;
   --color-ivory-light: #FAF7F2;
-  --color-ivory-dark: #ECE5DA;
+  --color-ivory-warm: #FBF8F3;
+  --color-ivory-dark: #EAE3D6;
+  
   --color-charcoal: #1D3033;
   --color-charcoal-muted: #3D5255;
   --color-charcoal-light: #526B6F;
   --color-charcoal-dark: #121F21;
-  --color-sage: #7A9A8B;
-  --color-sage-dark: #5B7B6C;
-  --color-sage-light: #9CB7A9;
-  --color-sage-bg: #EAF0EC;
+  --color-charcoal-night: #0E181A;
+
+  --color-sage: #6E8E7E;
+  --color-sage-deep: #4A6E5D;
+  --color-sage-muted: #8FA89B;
+  --color-sage-light: #B4C8BE;
+  --color-sage-soft: #EAF1ED;
+  --color-sage-water: #446865;
+
   --color-terracotta: #C26D53;
-  --color-terracotta-dark: #A4553D;
-  --color-terracotta-light: #E8A896;
+  --color-terracotta-dark: #9E4F39;
+  --color-terracotta-soft: #E8A896;
+  --color-terracotta-glow: #F4D3C9;
+
   --color-border-subtle: #E2DDD5;
-  --color-border-dark: #D4CDC3;
+  --color-border-warm: #DCD5C9;
+  --color-border-dark: #384F52;
 
   --font-display: var(--font-display), "Barlow Condensed", sans-serif;
   --font-body: var(--font-body), "Montserrat", sans-serif;
@@ -42,84 +52,93 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Custom selection */
 ::selection {
   background-color: #1D3033;
   color: #F5F0E7;
 }
 
-/* River & Fog Signature Keyframes */
-@keyframes fogDrift1 {
+/* Atmospheric Animations */
+@keyframes fogDriftLeft {
   0% {
-    transform: translate3d(-4%, 0, 0) scale(1);
+    transform: translate3d(-3%, 0, 0) scale(1);
     opacity: 0.85;
   }
   50% {
-    transform: translate3d(3%, -2%, 0) scale(1.05);
-    opacity: 0.65;
+    transform: translate3d(2%, -1.5%, 0) scale(1.04);
+    opacity: 0.6;
   }
   100% {
-    transform: translate3d(-4%, 0, 0) scale(1);
+    transform: translate3d(-3%, 0, 0) scale(1);
     opacity: 0.85;
   }
 }
 
-@keyframes fogDrift2 {
+@keyframes fogDriftRight {
   0% {
-    transform: translate3d(5%, -3%, 0) scale(1.03);
+    transform: translate3d(3%, -2%, 0) scale(1.03);
     opacity: 0.75;
   }
   50% {
-    transform: translate3d(-3%, 2%, 0) scale(1);
-    opacity: 0.55;
+    transform: translate3d(-2%, 1.5%, 0) scale(1);
+    opacity: 0.5;
   }
   100% {
-    transform: translate3d(5%, -3%, 0) scale(1.03);
+    transform: translate3d(3%, -2%, 0) scale(1.03);
     opacity: 0.75;
   }
 }
 
-@keyframes riverDraw {
+@keyframes riverFlowLine {
   0% {
-    stroke-dashoffset: 1600;
+    stroke-dashoffset: 1800;
     opacity: 0.2;
   }
-  40% {
-    opacity: 0.9;
+  50% {
+    opacity: 0.95;
   }
   100% {
     stroke-dashoffset: 0;
+    opacity: 0.85;
+  }
+}
+
+@keyframes waterPulse {
+  0%, 100% {
+    opacity: 0.7;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.9;
+    transform: scale(1.01);
+  }
+}
+
+@keyframes breatheExpand {
+  0%, 100% {
+    transform: scale(0.85);
+    opacity: 0.6;
+  }
+  50% {
+    transform: scale(1.18);
     opacity: 1;
   }
 }
 
-@keyframes brandEmerge {
-  0% {
-    opacity: 0;
-    transform: translate3d(0, 18px, 0);
-  }
-  100% {
-    opacity: 1;
-    transform: translate3d(0, 0, 0);
-  }
+.animate-fog-left {
+  animation: fogDriftLeft 16s ease-in-out infinite;
 }
 
-.animate-fog-1 {
-  animation: fogDrift1 14s ease-in-out infinite;
+.animate-fog-right {
+  animation: fogDriftRight 20s ease-in-out infinite;
 }
 
-.animate-fog-2 {
-  animation: fogDrift2 18s ease-in-out infinite;
+.animate-river-flow {
+  stroke-dasharray: 1800;
+  animation: riverFlowLine 2.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-.animate-river-draw {
-  stroke-dasharray: 1600;
-  animation: riverDraw 2.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-.animate-brand-emerge {
-  animation: brandEmerge 1.2s cubic-bezier(0.16, 1, 0.3, 1) 1.2s forwards;
-  opacity: 0;
+.animate-breathe {
+  animation: breatheExpand 8s ease-in-out infinite;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -128,16 +147,11 @@ body {
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
   }
-  .animate-river-draw {
+  .animate-river-flow {
     stroke-dashoffset: 0 !important;
-    opacity: 1 !important;
+    opacity: 0.85 !important;
   }
-  .animate-brand-emerge {
-    opacity: 1 !important;
-    transform: none !important;
-  }
-  .animate-fog-1, .animate-fog-2 {
+  .animate-fog-left, .animate-fog-right, .animate-breathe {
     animation: none !important;
-    opacity: 0 !important;
   }
 }
