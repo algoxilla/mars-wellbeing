@@ -134,7 +134,7 @@ body {
 
 .animate-river-flow {
   stroke-dasharray: 1800;
-  animation: riverFlowLine 2.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: riverFlowLine 3.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .animate-breathe {

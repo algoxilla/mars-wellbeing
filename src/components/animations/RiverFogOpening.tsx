@@ -4,7 +4,7 @@ import React, { useEffect, useState, useRef, useCallback } from "react";
 import Link from "next/link";
 import { ArrowRight, Compass, X, RotateCcw } from "lucide-react";
 
-type Scene = "atmosphere" | "slogan" | "transition" | "settled";
+type Scene = "atmosphere" | "slogan" | "subline" | "nature" | "settled";
 
 export function RiverFogOpening() {
   const [scene, setScene] = useState<Scene>("atmosphere");
@@ -21,25 +21,32 @@ export function RiverFogOpening() {
     clearTimers();
     setScene("atmosphere");
 
-    // Scene B: Slogan Reveal (Text Masking & Stagger) at 650ms
+    // Phase 1: Landscape & Atmosphere alone (0ms - 1400ms)
+
+    // Phase 2: Slogan Reveal (1400ms - 3800ms) - Deliberate, unhurried typography
     const t1 = setTimeout(() => {
       setScene("slogan");
-    }, 650);
+    }, 1400);
 
-    // Scene C: Nature Transition (Mist clears, river shimmers) at 2600ms
+    // Phase 3: Secondary Line Dedicated Visual Moment (3800ms - 5000ms)
     const t2 = setTimeout(() => {
-      setScene("transition");
-    }, 2600);
+      setScene("subline");
+    }, 3800);
 
-    // Scene D: Landing-Page Hero Settled at 3900ms
+    // Phase 4: River & Mist Nature Transition Breathing Space (5000ms - 6400ms)
     const t3 = setTimeout(() => {
+      setScene("nature");
+    }, 5000);
+
+    // Phase 5: Landing-Page Hero Settled & Fully Interactive (6400ms+)
+    const t4 = setTimeout(() => {
       setScene("settled");
       try {
         sessionStorage.setItem("mars_has_seen_opening", "true");
       } catch (_) {}
-    }, 3900);
+    }, 6400);
 
-    timersRef.current = [t1, t2, t3];
+    timersRef.current = [t1, t2, t3, t4];
   }, [clearTimers]);
 
   const handleSkip = useCallback(() => {
@@ -92,6 +99,8 @@ export function RiverFogOpening() {
   }, [startSequence, handleSkip, clearTimers]);
 
   const isSloganRevealed = scene !== "atmosphere";
+  const isSublineRevealed = scene === "subline" || scene === "nature" || scene === "settled";
+  const isNatureParted = scene === "nature" || scene === "settled";
   const isSettled = scene === "settled";
 
   return (
@@ -148,13 +157,13 @@ export function RiverFogOpening() {
             d="M-50,260 C240,190 480,240 720,180 C980,120 1220,210 1500,160 L1500,400 L-50,400 Z"
             fill="#9EB5AA"
             fillOpacity={scene === "atmosphere" ? "0.22" : "0.14"}
-            className="transition-all duration-1000 ease-out"
+            className="transition-all duration-1200 ease-out"
           />
           <path
             d="M-50,310 C180,230 460,280 760,220 C1060,160 1280,270 1500,230 L1500,450 L-50,450 Z"
             fill="#85A394"
             fillOpacity={scene === "atmosphere" ? "0.26" : "0.18"}
-            className="transition-all duration-1000 ease-out"
+            className="transition-all duration-1200 ease-out"
           />
 
           {/* Natural River Flow: Originates in distant upper valley, wraps elegantly around the text base */}
@@ -183,30 +192,30 @@ export function RiverFogOpening() {
             strokeWidth="2.5"
             strokeDasharray="16 20"
             strokeLinecap="round"
-            className={isSettled ? "opacity-85 transition-opacity duration-1000" : "opacity-45 transition-opacity duration-1000"}
+            className={isNatureParted ? "opacity-85 transition-opacity duration-1200" : "opacity-40 transition-opacity duration-1200"}
           />
 
           {/* Morning Fog & Mist Banks (Gradually Parting in Scene C & D) */}
           <g filter="url(#heavyFogBlur)" className="pointer-events-none">
             {/* Mist Bank Left (Valleys) */}
             <ellipse
-              cx={isSettled ? "280" : "380"}
+              cx={isNatureParted ? "280" : "380"}
               cy="460"
               rx="460"
               ry="180"
               fill="#FAF7F2"
-              fillOpacity={isSettled ? "0.18" : scene === "atmosphere" ? "0.9" : "0.75"}
-              className={!isSettled && !isReducedMotion ? "animate-fog-left transition-all duration-1200 ease-out" : "opacity-20 transition-all duration-1200 ease-out"}
+              fillOpacity={isNatureParted ? "0.18" : scene === "atmosphere" ? "0.9" : "0.75"}
+              className={!isSettled && !isReducedMotion ? "animate-fog-left transition-all duration-1400 ease-out" : "opacity-20 transition-all duration-1400 ease-out"}
             />
             {/* Mist Bank Right (Dawn Warmth) */}
             <ellipse
-              cx={isSettled ? "1180" : "1080"}
+              cx={isNatureParted ? "1180" : "1080"}
               cy="380"
               rx="520"
               ry="210"
               fill="#F4D3C9"
-              fillOpacity={isSettled ? "0.14" : scene === "atmosphere" ? "0.75" : "0.6"}
-              className={!isSettled && !isReducedMotion ? "animate-fog-right transition-all duration-1200 ease-out" : "opacity-15 transition-all duration-1200 ease-out"}
+              fillOpacity={isNatureParted ? "0.14" : scene === "atmosphere" ? "0.75" : "0.6"}
+              className={!isSettled && !isReducedMotion ? "animate-fog-right transition-all duration-1400 ease-out" : "opacity-15 transition-all duration-1400 ease-out"}
             />
           </g>
 
@@ -217,9 +226,9 @@ export function RiverFogOpening() {
             rx="680"
             ry="140"
             fill="#EAF1ED"
-            fillOpacity={isSettled ? "0.22" : "0.7"}
+            fillOpacity={isNatureParted ? "0.22" : "0.7"}
             filter="url(#gentleMistBlur)"
-            className="transition-all duration-1200 ease-out"
+            className="transition-all duration-1400 ease-out"
           />
         </svg>
       </div>
@@ -227,7 +236,7 @@ export function RiverFogOpening() {
       {/* 3. Opening Sequence Dissolve Screen (Atmospheric Dawn Veil) */}
       <div
         aria-hidden="true"
-        className={`absolute inset-0 bg-[#F5F0E7] pointer-events-none transition-opacity duration-1000 ease-out ${
+        className={`absolute inset-0 bg-[#F5F0E7] pointer-events-none transition-opacity duration-1200 ease-out ${
           scene === "atmosphere" && !isReducedMotion ? "opacity-50" : "opacity-0"
         }`}
       />
@@ -281,7 +290,7 @@ export function RiverFogOpening() {
             <h1 className="font-display font-bold tracking-tight uppercase text-[#1D3033]">
               <span className="block overflow-hidden py-1 sm:py-2">
                 <span
-                  className={`block text-5xl sm:text-7xl md:text-8xl lg:text-[96px] xl:text-[104px] leading-[0.92] transition-all duration-1000 ease-cinematic ${
+                  className={`block text-5xl sm:text-7xl md:text-8xl lg:text-[96px] xl:text-[104px] leading-[0.92] transition-all duration-[1400ms] ease-cinematic ${
                     isSloganRevealed || isReducedMotion
                       ? "translate-y-0 opacity-100"
                       : "translate-y-[115%] opacity-0"
@@ -292,7 +301,7 @@ export function RiverFogOpening() {
               </span>
               <span className="block overflow-hidden py-1 sm:py-2">
                 <span
-                  className={`block text-5xl sm:text-7xl md:text-8xl lg:text-[96px] xl:text-[104px] leading-[0.92] transition-all duration-1000 delay-150 ease-cinematic ${
+                  className={`block text-5xl sm:text-7xl md:text-8xl lg:text-[96px] xl:text-[104px] leading-[0.92] transition-all duration-[1400ms] delay-200 ease-cinematic ${
                     isSloganRevealed || isReducedMotion
                       ? "translate-y-0 opacity-100"
                       : "translate-y-[115%] opacity-0"
@@ -309,7 +318,7 @@ export function RiverFogOpening() {
             <h1 className="font-display font-bold tracking-tight uppercase text-[#1D3033]">
               <span className="block overflow-hidden py-0.5">
                 <span
-                  className={`block text-[38px] xs:text-[42px] leading-[0.94] transition-all duration-1000 ease-cinematic ${
+                  className={`block text-[38px] xs:text-[42px] leading-[0.94] transition-all duration-[1400ms] ease-cinematic ${
                     isSloganRevealed || isReducedMotion
                       ? "translate-y-0 opacity-100"
                       : "translate-y-[115%] opacity-0"
@@ -320,7 +329,7 @@ export function RiverFogOpening() {
               </span>
               <span className="block overflow-hidden py-0.5">
                 <span
-                  className={`block text-[38px] xs:text-[42px] leading-[0.94] transition-all duration-1000 delay-100 ease-cinematic ${
+                  className={`block text-[38px] xs:text-[42px] leading-[0.94] transition-all duration-[1400ms] delay-150 ease-cinematic ${
                     isSloganRevealed || isReducedMotion
                       ? "translate-y-0 opacity-100"
                       : "translate-y-[115%] opacity-0"
@@ -331,7 +340,7 @@ export function RiverFogOpening() {
               </span>
               <span className="block overflow-hidden py-0.5">
                 <span
-                  className={`block text-[38px] xs:text-[42px] leading-[0.94] transition-all duration-1000 delay-200 ease-cinematic ${
+                  className={`block text-[38px] xs:text-[42px] leading-[0.94] transition-all duration-[1400ms] delay-300 ease-cinematic ${
                     isSloganRevealed || isReducedMotion
                       ? "translate-y-0 opacity-100"
                       : "translate-y-[115%] opacity-0"
@@ -343,11 +352,11 @@ export function RiverFogOpening() {
             </h1>
           </div>
 
-          {/* Secondary Line: Inner Balance. Real Connection. */}
+          {/* Secondary Line: Inner Balance. Real Connection. — Dedicated Visual Moment */}
           <div className="overflow-hidden pt-2 sm:pt-4">
             <p
-              className={`font-sans text-xs sm:text-sm md:text-base font-semibold tracking-[0.25em] sm:tracking-[0.32em] uppercase text-[#4A6E5D] transition-all duration-1000 delay-300 ease-out ${
-                isSloganRevealed || isReducedMotion
+              className={`font-sans text-xs sm:text-sm md:text-base font-semibold tracking-[0.25em] sm:tracking-[0.32em] uppercase text-[#4A6E5D] transition-all duration-[1200ms] ease-cinematic ${
+                isSublineRevealed || isReducedMotion
                   ? "translate-y-0 opacity-100"
                   : "translate-y-full opacity-0"
               }`}
