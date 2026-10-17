@@ -12,11 +12,21 @@ if (!fs.existsSync(videoDir)) {
   fs.mkdirSync(videoDir, { recursive: true });
 }
 
+const frames = [
+  { name: "01-fullscreen-fog", time: 600, label: "1. Full-screen fog" },
+  { name: "02-fog-spreading", time: 1900, label: "2. Fog spreading outward" },
+  { name: "03-mountains-emerging", time: 2800, label: "3. Mountains emerging through mist" },
+  { name: "04-closed-double-door", time: 3800, label: "4. Mountains transitioning into double door" },
+  { name: "05-doors-opening", time: 4800, label: "5. Left & right door panels opening" },
+  { name: "06-homepage-revealed-behind", time: 5400, label: "6. Homepage appearing behind doors" },
+  { name: "07-homepage-completed", time: 6600, label: "7. Final homepage after intro completed" },
+];
+
 async function capture() {
   const browser = await chromium.launch({ channel: "msedge" });
 
-  // 1. Record Full Video of Desktop Cinematic Sequence (8 seconds)
-  console.log("1. Recording Desktop Video Transition (8 seconds)...");
+  // 1. Record Full Continuous Video Transition (8 seconds)
+  console.log("1. Recording Continuous Video Transition (8 seconds)...");
   const videoContext = await browser.newContext({
     recordVideo: {
       dir: videoDir,
@@ -26,73 +36,56 @@ async function capture() {
   });
 
   const videoPage = await videoContext.newPage();
-  await videoPage.goto("http://localhost:3000/?video=" + Date.now());
-  // Wait through the full 6.4s sequence + 1.6s settled rest
+  await videoPage.goto("http://localhost:3000/?vid=" + Date.now());
   await videoPage.waitForTimeout(8000);
   await videoPage.close();
   await videoContext.close();
 
-  // Find the recorded video and rename it clearly
+  // Save the video as mars-cinematic-doors.webm
   const videoFiles = fs.readdirSync(videoDir).filter((f) => f.endsWith(".webm"));
   if (videoFiles.length > 0) {
     const latestVideo = videoFiles[videoFiles.length - 1];
     const sourcePath = path.join(videoDir, latestVideo);
-    const destPath = path.join(targetDir, "mars-cinematic-opening.webm");
+    const destPath = path.join(targetDir, "mars-cinematic-doors.webm");
     fs.copyFileSync(sourcePath, destPath);
     console.log(`✓ Video recorded successfully: ${destPath}`);
   }
 
-  // 2. Capture Exact Desktop Sequential Storyboard Frames (1280x900)
-  console.log("2. Capturing Desktop Sequential Storyboard Frames...");
+  // 2. Capture Desktop Frames (1280x900)
+  console.log("2. Capturing Desktop Storyboard Frames (1280x900)...");
   const desktopContext = await browser.newContext({
     viewport: { width: 1280, height: 900 },
   });
 
-  const timestamps = [
-    { name: "scene-a-atmosphere-desktop.png", time: 700, label: "Scene A (Atmosphere alone)" },
-    { name: "scene-b-slogan-reveal-desktop.png", time: 2600, label: "Scene B (Slogan reveal)" },
-    { name: "scene-b2-subline-moment-desktop.png", time: 4400, label: "Scene B.2 (Subline moment)" },
-    { name: "scene-c-nature-transition-desktop.png", time: 5700, label: "Scene C (Nature breathing)" },
-    { name: "scene-d-settled-desktop.png", time: 7200, label: "Scene D (Landing settled)" },
-  ];
-
-  for (const item of timestamps) {
-    console.log(`  -> Capturing ${item.label} at t=${item.time}ms...`);
+  for (const item of frames) {
+    console.log(`  -> Capturing Desktop ${item.label} (t=${item.time}ms)...`);
     const page = await desktopContext.newPage();
-    await page.goto("http://localhost:3000/?t=" + Date.now() + Math.random());
+    await page.goto("http://localhost:3000/?frame=" + Date.now() + Math.random());
     await page.waitForTimeout(item.time);
-    await page.screenshot({ path: path.join(targetDir, item.name) });
+    await page.screenshot({ path: path.join(targetDir, `${item.name}-desktop.png`) });
     await page.close();
   }
   await desktopContext.close();
 
-  // 3. Capture Exact Mobile Sequential Storyboard Frames (390x844 iPhone Viewport)
-  console.log("3. Capturing Mobile Sequential Storyboard Frames...");
+  // 3. Capture Mobile Frames (390x844 iPhone Viewport)
+  console.log("3. Capturing Mobile Storyboard Frames (390x844)...");
   const mobileContext = await browser.newContext({
     viewport: { width: 390, height: 844 },
     userAgent: "Mozilla/5.0 (iPhone; CPU iPhone OS 16_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148",
   });
 
-  const mobileTimestamps = [
-    { name: "scene-a-atmosphere-mobile.png", time: 700, label: "Mobile Scene A (Atmosphere alone)" },
-    { name: "scene-b-slogan-reveal-mobile.png", time: 2600, label: "Mobile Scene B (Slogan reveal)" },
-    { name: "scene-b2-subline-moment-mobile.png", time: 4400, label: "Mobile Scene B.2 (Subline moment)" },
-    { name: "scene-c-nature-transition-mobile.png", time: 5700, label: "Mobile Scene C (Nature breathing)" },
-    { name: "scene-d-settled-mobile.png", time: 7200, label: "Mobile Scene D (Landing settled)" },
-  ];
-
-  for (const item of mobileTimestamps) {
-    console.log(`  -> Capturing ${item.label} at t=${item.time}ms...`);
+  for (const item of frames) {
+    console.log(`  -> Capturing Mobile ${item.label} (t=${item.time}ms)...`);
     const page = await mobileContext.newPage();
-    await page.goto("http://localhost:3000/?t=" + Date.now() + Math.random());
+    await page.goto("http://localhost:3000/?frame=" + Date.now() + Math.random());
     await page.waitForTimeout(item.time);
-    await page.screenshot({ path: path.join(targetDir, item.name) });
+    await page.screenshot({ path: path.join(targetDir, `${item.name}-mobile.png`) });
     await page.close();
   }
   await mobileContext.close();
 
   await browser.close();
-  console.log("All cinematic storyboard captures and video completed successfully!");
+  console.log("All 7 sequential storyboard captures (desktop + mobile) and video completed successfully!");
 }
 
 capture().catch((err) => {

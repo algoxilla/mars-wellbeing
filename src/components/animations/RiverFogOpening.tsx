@@ -4,10 +4,16 @@ import React, { useEffect, useState, useRef, useCallback } from "react";
 import Link from "next/link";
 import { ArrowRight, Compass, X, RotateCcw } from "lucide-react";
 
-type Scene = "atmosphere" | "slogan" | "subline" | "nature" | "settled";
+type IntroScene =
+  | "fog" // Scene A: Full-screen atmospheric fog (0.0s - 1.4s)
+  | "mountains" // Scene B: Fog spreads outward, revealing mountains (1.4s - 3.2s)
+  | "doors-closed" // Scene C: Mountains dissolve, revealing closed sanctuary doors (3.2s - 4.5s)
+  | "doors-opening" // Scene D: Double doors slide open to left and right (4.5s - 6.0s)
+  | "settled"; // Scene E: Fully interactive homepage (6.0s+)
 
 export function RiverFogOpening() {
-  const [scene, setScene] = useState<Scene>("atmosphere");
+  const [introScene, setIntroScene] = useState<IntroScene>("fog");
+  const [isIntroActive, setIsIntroActive] = useState<boolean>(true);
   const [isReducedMotion, setIsReducedMotion] = useState<boolean>(false);
   const [hasMounted, setHasMounted] = useState<boolean>(false);
   const timersRef = useRef<NodeJS.Timeout[]>([]);
@@ -19,42 +25,47 @@ export function RiverFogOpening() {
 
   const startSequence = useCallback(() => {
     clearTimers();
-    setScene("atmosphere");
+    setIsIntroActive(true);
+    setIntroScene("fog");
 
-    // Phase 1: Landscape & Atmosphere alone (0ms - 1400ms)
-
-    // Phase 2: Slogan Reveal (1400ms - 3800ms) - Deliberate, unhurried typography
+    // Scene B: Fog spreads outward, revealing mountains (at 1400ms)
     const t1 = setTimeout(() => {
-      setScene("slogan");
+      setIntroScene("mountains");
     }, 1400);
 
-    // Phase 3: Secondary Line Dedicated Visual Moment (3800ms - 5000ms)
+    // Scene C: Mountains dissolve to reveal closed double doors (at 3200ms)
     const t2 = setTimeout(() => {
-      setScene("subline");
-    }, 3800);
+      setIntroScene("doors-closed");
+    }, 3200);
 
-    // Phase 4: River & Mist Nature Transition Breathing Space (5000ms - 6400ms)
+    // Scene D: Double doors slide open to left and right (at 4500ms)
     const t3 = setTimeout(() => {
-      setScene("nature");
-    }, 5000);
+      setIntroScene("doors-opening");
+    }, 4500);
 
-    // Phase 5: Landing-Page Hero Settled & Fully Interactive (6400ms+)
+    // Scene E: Intro complete, overlay dismissed (at 6000ms)
     const t4 = setTimeout(() => {
-      setScene("settled");
+      setIntroScene("settled");
+      setIsIntroActive(false);
       try {
         sessionStorage.setItem("mars_has_seen_opening", "true");
       } catch (_) {}
-    }, 6400);
+    }, 6000);
 
     timersRef.current = [t1, t2, t3, t4];
   }, [clearTimers]);
 
   const handleSkip = useCallback(() => {
     clearTimers();
-    setScene("settled");
-    try {
-      sessionStorage.setItem("mars_has_seen_opening", "true");
-    } catch (_) {}
+    setIntroScene("doors-opening");
+    const t = setTimeout(() => {
+      setIntroScene("settled");
+      setIsIntroActive(false);
+      try {
+        sessionStorage.setItem("mars_has_seen_opening", "true");
+      } catch (_) {}
+    }, 350);
+    timersRef.current = [t];
   }, [clearTimers]);
 
   const handleReplay = useCallback(() => {
@@ -68,7 +79,8 @@ export function RiverFogOpening() {
     const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
     if (mediaQuery.matches) {
       setIsReducedMotion(true);
-      setScene("settled");
+      setIsIntroActive(false);
+      setIntroScene("settled");
       return;
     }
 
@@ -79,7 +91,8 @@ export function RiverFogOpening() {
     } catch (_) {}
 
     if (hasSeen) {
-      setScene("settled");
+      setIsIntroActive(false);
+      setIntroScene("settled");
     } else {
       startSequence();
     }
@@ -98,23 +111,25 @@ export function RiverFogOpening() {
     };
   }, [startSequence, handleSkip, clearTimers]);
 
-  const isSloganRevealed = scene !== "atmosphere";
-  const isSublineRevealed = scene === "subline" || scene === "nature" || scene === "settled";
-  const isNatureParted = scene === "nature" || scene === "settled";
-  const isSettled = scene === "settled";
+  const isDoorsOpen = introScene === "doors-opening" || introScene === "settled";
+  const hideMountains = introScene === "doors-closed" || isDoorsOpen;
 
   return (
     <section
       aria-label="Welcome to MARS Wellbeing"
       className="relative min-h-[92vh] flex items-center justify-center overflow-hidden bg-[#F5F0E7] border-b border-[#E2DDD5]"
     >
+      {/* =========================================================================
+          PART 1: THE LIVING HOMEPAGE HERO (Rendered Directly Behind the Doors)
+          ========================================================================= */}
+
       {/* 1. Dawn Sky & Morning Light Radial Gradient */}
       <div
         aria-hidden="true"
         className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_80%_60%_at_50%_0%,rgba(244,211,201,0.35)_0%,rgba(235,241,237,0.4)_50%,transparent_85%)]"
       />
 
-      {/* 2. Topographic & Natural Landscape Layers (SVG) */}
+      {/* 2. Topographic & Natural Landscape Layers with Living River (SVG) */}
       <div
         aria-hidden="true"
         className="absolute inset-0 w-full h-full pointer-events-none overflow-hidden"
@@ -127,8 +142,7 @@ export function RiverFogOpening() {
           className="w-full h-full"
         >
           <defs>
-            {/* Soft River Water Gradient: Deep Forest Teal -> Luminous Sage -> Deep Teal -> Dawn Terracotta */}
-            <linearGradient id="naturalRiverGrad" x1="15%" y1="0%" x2="85%" y2="100%">
+            <linearGradient id="heroRiverGrad" x1="15%" y1="0%" x2="85%" y2="100%">
               <stop offset="0%" stopColor="#4A6E5D" stopOpacity="0.35" />
               <stop offset="25%" stopColor="#6E8E7E" stopOpacity="0.85" />
               <stop offset="60%" stopColor="#23453D" stopOpacity="0.9" />
@@ -136,19 +150,14 @@ export function RiverFogOpening() {
               <stop offset="100%" stopColor="#C26D53" stopOpacity="0.75" />
             </linearGradient>
 
-            {/* Sunlight Reflection along river crest */}
-            <linearGradient id="riverSunHighlight" x1="0%" y1="50%" x2="100%" y2="50%">
+            <linearGradient id="heroSunHighlight" x1="0%" y1="50%" x2="100%" y2="50%">
               <stop offset="0%" stopColor="#FAF7F2" stopOpacity="0.7" />
               <stop offset="50%" stopColor="#EAF1ED" stopOpacity="0.95" />
               <stop offset="100%" stopColor="#FAF7F2" stopOpacity="0.4" />
             </linearGradient>
 
-            {/* Fog Blur Filters */}
-            <filter id="heavyFogBlur" x="-30%" y="-30%" width="160%" height="160%">
-              <feGaussianBlur stdDeviation="45" />
-            </filter>
-            <filter id="gentleMistBlur" x="-20%" y="-20%" width="140%" height="140%">
-              <feGaussianBlur stdDeviation="24" />
+            <filter id="heroFogBlur" x="-30%" y="-30%" width="160%" height="160%">
+              <feGaussianBlur stdDeviation="35" />
             </filter>
           </defs>
 
@@ -156,18 +165,15 @@ export function RiverFogOpening() {
           <path
             d="M-50,260 C240,190 480,240 720,180 C980,120 1220,210 1500,160 L1500,400 L-50,400 Z"
             fill="#9EB5AA"
-            fillOpacity={scene === "atmosphere" ? "0.22" : "0.14"}
-            className="transition-all duration-1200 ease-out"
+            fillOpacity="0.14"
           />
           <path
             d="M-50,310 C180,230 460,280 760,220 C1060,160 1280,270 1500,230 L1500,450 L-50,450 Z"
             fill="#85A394"
-            fillOpacity={scene === "atmosphere" ? "0.26" : "0.18"}
-            className="transition-all duration-1200 ease-out"
+            fillOpacity="0.18"
           />
 
-          {/* Natural River Flow: Originates in distant upper valley, wraps elegantly around the text base */}
-          {/* Subtle riverbed shadow */}
+          {/* Natural River Flow: Riverbed base & Living water ribbon */}
           <path
             d="M 680,170 C 720,240 580,310 420,380 C 220,470 120,590 180,720 C 220,800 380,860 620,840 C 920,810 1180,880 1520,820"
             stroke="#DCD5C9"
@@ -175,216 +181,92 @@ export function RiverFogOpening() {
             strokeLinecap="round"
             className="opacity-50"
           />
-
-          {/* Main living river ribbon */}
           <path
             d="M 680,170 C 720,240 580,310 420,380 C 220,470 120,590 180,720 C 220,800 380,860 620,840 C 920,810 1180,880 1520,820"
-            stroke="url(#naturalRiverGrad)"
+            stroke="url(#heroRiverGrad)"
             strokeWidth="14"
             strokeLinecap="round"
-            className={!isSettled && !isReducedMotion ? "animate-river-flow" : "opacity-85"}
+            className="opacity-85"
           />
-
-          {/* Sunlight shimmer line on water */}
           <path
             d="M 680,170 C 720,240 580,310 420,380 C 220,470 120,590 180,720 C 220,800 380,860 620,840 C 920,810 1180,880 1520,820"
-            stroke="url(#riverSunHighlight)"
+            stroke="url(#heroSunHighlight)"
             strokeWidth="2.5"
             strokeDasharray="16 20"
             strokeLinecap="round"
-            className={isNatureParted ? "opacity-85 transition-opacity duration-1200" : "opacity-40 transition-opacity duration-1200"}
+            className="opacity-85"
           />
 
-          {/* Morning Fog & Mist Banks (Gradually Parting in Scene C & D) */}
-          <g filter="url(#heavyFogBlur)" className="pointer-events-none">
-            {/* Mist Bank Left (Valleys) */}
-            <ellipse
-              cx={isNatureParted ? "280" : "380"}
-              cy="460"
-              rx="460"
-              ry="180"
-              fill="#FAF7F2"
-              fillOpacity={isNatureParted ? "0.18" : scene === "atmosphere" ? "0.9" : "0.75"}
-              className={!isSettled && !isReducedMotion ? "animate-fog-left transition-all duration-1400 ease-out" : "opacity-20 transition-all duration-1400 ease-out"}
-            />
-            {/* Mist Bank Right (Dawn Warmth) */}
-            <ellipse
-              cx={isNatureParted ? "1180" : "1080"}
-              cy="380"
-              rx="520"
-              ry="210"
-              fill="#F4D3C9"
-              fillOpacity={isNatureParted ? "0.14" : scene === "atmosphere" ? "0.75" : "0.6"}
-              className={!isSettled && !isReducedMotion ? "animate-fog-right transition-all duration-1400 ease-out" : "opacity-15 transition-all duration-1400 ease-out"}
-            />
+          {/* Soft ambient valley mist */}
+          <g filter="url(#heroFogBlur)" className="pointer-events-none opacity-20">
+            <ellipse cx="280" cy="460" rx="460" ry="180" fill="#FAF7F2" />
+            <ellipse cx="1180" cy="380" rx="520" ry="210" fill="#F4D3C9" />
           </g>
-
-          {/* Lower ground mist */}
-          <ellipse
-            cx="720"
-            cy="760"
-            rx="680"
-            ry="140"
-            fill="#EAF1ED"
-            fillOpacity={isNatureParted ? "0.22" : "0.7"}
-            filter="url(#gentleMistBlur)"
-            className="transition-all duration-1400 ease-out"
-          />
         </svg>
       </div>
 
-      {/* 3. Opening Sequence Dissolve Screen (Atmospheric Dawn Veil) */}
-      <div
-        aria-hidden="true"
-        className={`absolute inset-0 bg-[#F5F0E7] pointer-events-none transition-opacity duration-1200 ease-out ${
-          scene === "atmosphere" && !isReducedMotion ? "opacity-50" : "opacity-0"
-        }`}
-      />
-
-      {/* 4. Non-intrusive Ambient Controls: Skip Intro (during playback) / Replay (when settled) */}
+      {/* 3. Replay Atmosphere Button (Available when settled) */}
       <div className="absolute top-5 right-5 sm:top-7 sm:right-8 z-30 flex items-center gap-2">
-        {hasMounted && !isReducedMotion && (
-          !isSettled ? (
-            <button
-              type="button"
-              onClick={handleSkip}
-              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-medium text-[#1D3033] bg-[#FAF7F2]/90 hover:bg-[#FAF7F2] border border-[#E2DDD5] shadow-xs rounded-xs transition-all backdrop-blur-xs cursor-pointer focus:outline-none focus:ring-1 focus:ring-[#6E8E7E]"
-              aria-label="Skip intro"
-            >
-              <span>Skip intro</span>
-              <X className="w-3.5 h-3.5 text-[#6E8E7E]" />
-            </button>
-          ) : (
-            <button
-              type="button"
-              onClick={handleReplay}
-              className="inline-flex items-center gap-1.5 px-3 py-1 text-xs font-medium text-[#3D5255] hover:text-[#1D3033] bg-[#FAF7F2]/80 hover:bg-[#FAF7F2] border border-[#E2DDD5] rounded-xs transition-all shadow-2xs cursor-pointer focus:outline-none focus:ring-1 focus:ring-[#6E8E7E]"
-              title="Replay atmosphere"
-              aria-label="Replay atmosphere"
-            >
-              <RotateCcw className="w-3 h-3 text-[#6E8E7E]" />
-              <span className="hidden sm:inline">Replay atmosphere</span>
-            </button>
-          )
+        {hasMounted && !isIntroActive && !isReducedMotion && (
+          <button
+            type="button"
+            onClick={handleReplay}
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-[#3D5255] hover:text-[#1D3033] bg-[#FAF7F2]/90 hover:bg-[#FAF7F2] border border-[#E2DDD5] rounded-xs transition-all shadow-2xs cursor-pointer focus:outline-none focus:ring-1 focus:ring-[#6E8E7E]"
+            title="Replay opening experience"
+            aria-label="Replay atmosphere"
+          >
+            <RotateCcw className="w-3.5 h-3.5 text-[#6E8E7E]" />
+            <span className="hidden sm:inline">Replay atmosphere</span>
+          </button>
         )}
       </div>
 
-      {/* 5. Main Hero & Slogan Composition */}
+      {/* 4. Main Hero Typography & Action Content */}
       <div className="relative z-20 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24 text-center flex flex-col items-center">
-        {/* Editorial Eyebrow Tag: Docks smoothly when settled */}
-        <div
-          className={`inline-flex items-center gap-2.5 px-4 py-1.5 mb-6 text-xs font-semibold tracking-wider uppercase text-[#1D3033] bg-[#FAF7F2]/90 border border-[#E2DDD5] shadow-2xs backdrop-blur-xs transition-all duration-700 ${
-            isSettled || isReducedMotion
-              ? "opacity-100 translate-y-0"
-              : "opacity-0 -translate-y-2 pointer-events-none"
-          }`}
-        >
+        {/* Editorial Eyebrow Tag */}
+        <div className="inline-flex items-center gap-2.5 px-4 py-1.5 mb-6 text-xs font-semibold tracking-wider uppercase text-[#1D3033] bg-[#FAF7F2]/90 border border-[#E2DDD5] shadow-2xs backdrop-blur-xs">
           <span className="w-2 h-2 rounded-full bg-[#6E8E7E] animate-pulse" aria-hidden="true" />
           <span>Bengaluru, India — Initial Individual & Cohort Spaces</span>
         </div>
 
-        {/* Primary Slogan with Precision Overflow-Hidden Clipping Masks */}
+        {/* Primary Slogan & Secondary Line */}
         <div className="space-y-3 max-w-5xl mx-auto w-full">
-          {/* Desktop & Tablet Line Composition (sm and up) */}
+          {/* Desktop & Tablet Display Heading */}
           <div className="hidden sm:block">
             <h1 className="font-display font-bold tracking-tight uppercase text-[#1D3033]">
-              <span className="block overflow-hidden py-1 sm:py-2">
-                <span
-                  className={`block text-5xl sm:text-7xl md:text-8xl lg:text-[96px] xl:text-[104px] leading-[0.92] transition-all duration-[1400ms] ease-cinematic ${
-                    isSloganRevealed || isReducedMotion
-                      ? "translate-y-0 opacity-100"
-                      : "translate-y-[115%] opacity-0"
-                  }`}
-                >
-                  BRINGING PEOPLE
-                </span>
+              <span className="block text-5xl sm:text-7xl md:text-8xl lg:text-[96px] xl:text-[104px] leading-[0.92]">
+                BRINGING PEOPLE
               </span>
-              <span className="block overflow-hidden py-1 sm:py-2">
-                <span
-                  className={`block text-5xl sm:text-7xl md:text-8xl lg:text-[96px] xl:text-[104px] leading-[0.92] transition-all duration-[1400ms] delay-200 ease-cinematic ${
-                    isSloganRevealed || isReducedMotion
-                      ? "translate-y-0 opacity-100"
-                      : "translate-y-[115%] opacity-0"
-                  }`}
-                >
-                  BACK TO THEMSELVES
-                </span>
+              <span className="block text-5xl sm:text-7xl md:text-8xl lg:text-[96px] xl:text-[104px] leading-[0.92]">
+                BACK TO THEMSELVES
               </span>
             </h1>
           </div>
 
-          {/* Mobile Line Composition (under 640px) — Intentionally composed for small viewports */}
+          {/* Mobile Display Heading (Intentionally Composed) */}
           <div className="block sm:hidden">
             <h1 className="font-display font-bold tracking-tight uppercase text-[#1D3033]">
-              <span className="block overflow-hidden py-0.5">
-                <span
-                  className={`block text-[38px] xs:text-[42px] leading-[0.94] transition-all duration-[1400ms] ease-cinematic ${
-                    isSloganRevealed || isReducedMotion
-                      ? "translate-y-0 opacity-100"
-                      : "translate-y-[115%] opacity-0"
-                  }`}
-                >
-                  BRINGING
-                </span>
-              </span>
-              <span className="block overflow-hidden py-0.5">
-                <span
-                  className={`block text-[38px] xs:text-[42px] leading-[0.94] transition-all duration-[1400ms] delay-150 ease-cinematic ${
-                    isSloganRevealed || isReducedMotion
-                      ? "translate-y-0 opacity-100"
-                      : "translate-y-[115%] opacity-0"
-                  }`}
-                >
-                  PEOPLE BACK
-                </span>
-              </span>
-              <span className="block overflow-hidden py-0.5">
-                <span
-                  className={`block text-[38px] xs:text-[42px] leading-[0.94] transition-all duration-[1400ms] delay-300 ease-cinematic ${
-                    isSloganRevealed || isReducedMotion
-                      ? "translate-y-0 opacity-100"
-                      : "translate-y-[115%] opacity-0"
-                  }`}
-                >
-                  TO THEMSELVES
-                </span>
-              </span>
+              <span className="block text-[38px] xs:text-[42px] leading-[0.94]">BRINGING</span>
+              <span className="block text-[38px] xs:text-[42px] leading-[0.94]">PEOPLE BACK</span>
+              <span className="block text-[38px] xs:text-[42px] leading-[0.94]">TO THEMSELVES</span>
             </h1>
           </div>
 
-          {/* Secondary Line: Inner Balance. Real Connection. — Dedicated Visual Moment */}
-          <div className="overflow-hidden pt-2 sm:pt-4">
-            <p
-              className={`font-sans text-xs sm:text-sm md:text-base font-semibold tracking-[0.25em] sm:tracking-[0.32em] uppercase text-[#4A6E5D] transition-all duration-[1200ms] ease-cinematic ${
-                isSublineRevealed || isReducedMotion
-                  ? "translate-y-0 opacity-100"
-                  : "translate-y-full opacity-0"
-              }`}
-            >
+          {/* Secondary Line */}
+          <div className="pt-2 sm:pt-4">
+            <p className="font-sans text-xs sm:text-sm md:text-base font-semibold tracking-[0.25em] sm:tracking-[0.32em] uppercase text-[#4A6E5D]">
               Inner Balance. Real Connection.
             </p>
           </div>
         </div>
 
-        {/* Supporting Narrative — Carefully spaced so river path flows cleanly beneath */}
-        <p
-          className={`mt-6 sm:mt-8 text-base sm:text-lg lg:text-xl text-[#3D5255] font-normal leading-relaxed max-w-2xl mx-auto transition-all duration-700 delay-100 ${
-            isSettled || isReducedMotion
-              ? "opacity-100 translate-y-0"
-              : "opacity-0 translate-y-3 pointer-events-none"
-          }`}
-        >
+        {/* Supporting Narrative */}
+        <p className="mt-6 sm:mt-8 text-base sm:text-lg lg:text-xl text-[#3D5255] font-normal leading-relaxed max-w-2xl mx-auto">
           An intentional mental wellbeing sanctuary rooted in Bengaluru. Uniting <strong>Nova Hikari</strong>—a slow ten-stage guided journey—with intimate community circles and qualified, verified professional care.
         </p>
 
-        {/* Clear Action Hierarchy — Settled Landing Buttons */}
-        <div
-          className={`mt-8 sm:mt-10 flex flex-col sm:flex-row items-center justify-center gap-4 w-full sm:w-auto transition-all duration-700 delay-200 ${
-            isSettled || isReducedMotion
-              ? "opacity-100 translate-y-0"
-              : "opacity-0 translate-y-4 pointer-events-none"
-          }`}
-        >
+        {/* Action CTAs */}
+        <div className="mt-8 sm:mt-10 flex flex-col sm:flex-row items-center justify-center gap-4 w-full sm:w-auto">
           <Link
             href="/nova-hikari"
             className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-4 text-xs sm:text-sm font-semibold uppercase tracking-wider bg-[#1D3033] text-[#F5F0E7] hover:bg-[#284145] active:scale-[0.99] border border-[#1D3033] transition-all shadow-xs"
@@ -409,14 +291,8 @@ export function RiverFogOpening() {
           </Link>
         </div>
 
-        {/* Quiet Reassurance Indicators */}
-        <div
-          className={`mt-12 sm:mt-14 pt-8 border-t border-[#E2DDD5]/70 grid grid-cols-2 md:grid-cols-4 gap-6 text-left max-w-3xl w-full transition-all duration-700 delay-300 ${
-            isSettled || isReducedMotion
-              ? "opacity-100 translate-y-0"
-              : "opacity-0 translate-y-4 pointer-events-none"
-          }`}
-        >
+        {/* Reassurance Grid */}
+        <div className="mt-12 sm:mt-14 pt-8 border-t border-[#E2DDD5]/70 grid grid-cols-2 md:grid-cols-4 gap-6 text-left max-w-3xl w-full">
           <div className="space-y-0.5">
             <span className="text-[11px] font-semibold tracking-wider uppercase text-[#6E8E7E]">Self-Guided</span>
             <p className="text-xs text-[#1D3033] font-medium">Nova Hikari (10 Stages)</p>
@@ -442,6 +318,216 @@ export function RiverFogOpening() {
           </div>
         </div>
       </div>
+
+      {/* =========================================================================
+          PART 2: THE CINEMATIC INTRO OVERLAY (Layer Stack: Doors below, Mountains above)
+          ========================================================================= */}
+      {isIntroActive && !isReducedMotion && (
+        <div
+          role="dialog"
+          aria-label="Welcome to MARS Sanctuary"
+          className="fixed inset-0 z-40 overflow-hidden pointer-events-auto"
+        >
+          {/* Skip Intro Control (Accessible, immediately available throughout intro) */}
+          <div className="absolute top-5 right-5 sm:top-7 sm:right-8 z-50">
+            <button
+              type="button"
+              onClick={handleSkip}
+              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-medium text-[#1D3033] bg-[#FAF7F2] hover:bg-[#F5F0E7] border border-[#E2DDD5] shadow-xs rounded-xs transition-all cursor-pointer focus:outline-none focus:ring-1 focus:ring-[#6E8E7E]"
+              aria-label="Skip intro"
+            >
+              <span>Skip intro</span>
+              <X className="w-3.5 h-3.5 text-[#6E8E7E]" />
+            </button>
+          </div>
+
+          {/* -------------------------------------------------------------------
+              MIDDLE LAYER: SYMMETRICAL SANCTUARY DOUBLE DOORS (z-20)
+              - Left & Right doors are 100% solid opaque (#FAF7F2), meeting at center
+              - When closed, they conceal the homepage completely
+              - When Scene D triggers, they slide apart to left (-100%) and right (+100%)
+              ------------------------------------------------------------------- */}
+          <div className="absolute inset-0 z-20 pointer-events-none">
+            {/* Luminous Center Seam Light Spill */}
+            <div
+              className={`absolute left-1/2 top-0 bottom-0 w-[2px] -translate-x-1/2 bg-[#FAF7F2] z-30 transition-opacity duration-700 shadow-[0_0_15px_rgba(250,247,242,1),0_0_35px_rgba(244,211,201,0.9)] ${
+                introScene === "doors-closed" ? "opacity-95" : "opacity-0"
+              }`}
+            />
+
+            {/* LEFT DOOR PANEL (100% Solid Opaque Ivory) */}
+            <div
+              style={{ backgroundColor: "#FAF7F2" }}
+              className={`absolute left-0 top-0 bottom-0 w-1/2 border-r border-[#DCD5C9] shadow-2xl z-20 flex items-center justify-end transition-transform duration-[1500ms] ease-cinematic will-change-transform ${
+                isDoorsOpen ? "-translate-x-full" : "translate-x-0"
+              }`}
+            >
+              {/* Architectural Panel Inset with Recessed Shadow */}
+              <div className="absolute inset-4 sm:inset-12 border border-[#E2DDD5] bg-[#F5F0E7]/60 pointer-events-none shadow-inner">
+                <div className="absolute inset-3 sm:inset-6 border border-[#E2DDD5]/70" />
+              </div>
+
+              {/* Left Door Vertical Architectural Pull Handle */}
+              <div className="relative mr-5 sm:mr-8 z-20 flex flex-col items-center">
+                <div className="w-1.5 sm:w-2 h-36 sm:h-52 bg-[#1D3033] rounded-full shadow-md flex items-center justify-center">
+                  <div className="w-0.5 sm:w-1 h-20 sm:h-28 bg-[#6E8E7E] rounded-full opacity-70" />
+                </div>
+              </div>
+
+              {/* Left Half of Center Sanctuary Seal */}
+              <div className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 w-14 sm:w-20 h-14 sm:h-20 rounded-full border-2 border-[#1D3033]/60 bg-[#FAF7F2] flex items-center justify-center overflow-hidden pointer-events-none shadow-xs">
+                <div className="w-8 sm:w-12 h-8 sm:h-12 rounded-full border border-[#6E8E7E]/80 bg-[#EAF1ED]/60" />
+              </div>
+            </div>
+
+            {/* RIGHT DOOR PANEL (100% Solid Opaque Ivory) */}
+            <div
+              style={{ backgroundColor: "#FAF7F2" }}
+              className={`absolute right-0 top-0 bottom-0 w-1/2 border-l border-[#DCD5C9] shadow-2xl z-20 flex items-center justify-start transition-transform duration-[1500ms] ease-cinematic will-change-transform ${
+                isDoorsOpen ? "translate-x-full" : "translate-x-0"
+              }`}
+            >
+              {/* Architectural Panel Inset with Recessed Shadow */}
+              <div className="absolute inset-4 sm:inset-12 border border-[#E2DDD5] bg-[#F5F0E7]/60 pointer-events-none shadow-inner">
+                <div className="absolute inset-3 sm:inset-6 border border-[#E2DDD5]/70" />
+              </div>
+
+              {/* Right Door Vertical Architectural Pull Handle */}
+              <div className="relative ml-5 sm:ml-8 z-20 flex flex-col items-center">
+                <div className="w-1.5 sm:w-2 h-36 sm:h-52 bg-[#1D3033] rounded-full shadow-md flex items-center justify-center">
+                  <div className="w-0.5 sm:w-1 h-20 sm:h-28 bg-[#6E8E7E] rounded-full opacity-70" />
+                </div>
+              </div>
+
+              {/* Right Half of Center Sanctuary Seal */}
+              <div className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/2 w-14 sm:w-20 h-14 sm:h-20 rounded-full border-2 border-[#1D3033]/60 bg-[#FAF7F2] flex items-center justify-center overflow-hidden pointer-events-none shadow-xs">
+                <div className="w-8 sm:w-12 h-8 sm:h-12 rounded-full border border-[#6E8E7E]/80 bg-[#EAF1ED]/60" />
+              </div>
+            </div>
+          </div>
+
+          {/* -------------------------------------------------------------------
+              TOP LAYER: FULL-SCREEN FOG & SACRED MOUNTAIN SUNRISE (z-30)
+              - Sits directly over the double doors
+              - In Scene A: Fog is thick and dense
+              - In Scene B: Fog spreads outward, revealing the mountain silhouette
+              - In Scene C: Smoothly dissolves (opacity-0), revealing the closed doors!
+              ------------------------------------------------------------------- */}
+          <div
+            className={`absolute inset-0 z-30 transition-opacity duration-1000 ease-out ${
+              hideMountains ? "opacity-0 pointer-events-none" : "opacity-100"
+            }`}
+          >
+            <svg
+              viewBox="0 0 1440 900"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              preserveAspectRatio="xMidYMid slice"
+              className="w-full h-full absolute inset-0"
+            >
+              <defs>
+                <radialGradient id="mountainDawnGlow" cx="50%" cy="40%" r="65%">
+                  <stop offset="0%" stopColor="#F4D3C9" stopOpacity="0.8" />
+                  <stop offset="35%" stopColor="#FAF7F2" stopOpacity="0.7" />
+                  <stop offset="70%" stopColor="#EAF1ED" stopOpacity="0.5" />
+                  <stop offset="100%" stopColor="#F5F0E7" stopOpacity="1" />
+                </radialGradient>
+
+                <linearGradient id="peakGradDistant" x1="50%" y1="0%" x2="50%" y2="100%">
+                  <stop offset="0%" stopColor="#7A9A8B" stopOpacity="0.85" />
+                  <stop offset="100%" stopColor="#9EB5AA" stopOpacity="0.4" />
+                </linearGradient>
+
+                <linearGradient id="peakGradMid" x1="50%" y1="0%" x2="50%" y2="100%">
+                  <stop offset="0%" stopColor="#4A6E5D" stopOpacity="0.9" />
+                  <stop offset="60%" stopColor="#6E8E7E" stopOpacity="0.7" />
+                  <stop offset="100%" stopColor="#8FA89B" stopOpacity="0.3" />
+                </linearGradient>
+
+                <linearGradient id="ridgeForeground" x1="50%" y1="0%" x2="50%" y2="100%">
+                  <stop offset="0%" stopColor="#1D3033" stopOpacity="0.85" />
+                  <stop offset="40%" stopColor="#3D5255" stopOpacity="0.7" />
+                  <stop offset="100%" stopColor="#DCD5C9" stopOpacity="0.4" />
+                </linearGradient>
+
+                <filter id="introFogHeavy" x="-40%" y="-40%" width="180%" height="180%">
+                  <feGaussianBlur stdDeviation="55" />
+                </filter>
+              </defs>
+
+              {/* 1. Fully Opaque Ivory Canvas Base (Guarantees zero bleed-through) */}
+              <rect width="1440" height="900" fill="#F5F0E7" />
+
+              {/* 2. Soft Dawn Sky Backdrop */}
+              <rect width="1440" height="900" fill="url(#mountainDawnGlow)" />
+
+              {/* 3. Mountain Silhouette: Inspired by the ascending peak in the MARS logo */}
+              {/* Layer 1: Distant Noble Peaks */}
+              <path
+                d="M 60,560 L 420,330 L 720,180 L 1020,330 L 1380,560 L 1440,620 L 0,620 Z"
+                fill="url(#peakGradDistant)"
+                className={`transition-all duration-1400 ease-out ${
+                  introScene === "fog" ? "opacity-0 translate-y-8" : "opacity-100 translate-y-0"
+                }`}
+              />
+
+              {/* Layer 2: Midground Sculpted Ridges */}
+              <path
+                d="M-50,660 C 220,470 480,490 720,320 C 960,490 1220,470 1490,660 L 1490,900 L -50,900 Z"
+                fill="url(#peakGradMid)"
+                className={`transition-all duration-1400 delay-150 ease-out ${
+                  introScene === "fog" ? "opacity-0 translate-y-12" : "opacity-90 translate-y-0"
+                }`}
+              />
+
+              {/* Layer 3: Foreground Valley Terraces */}
+              <path
+                d="M-50,770 C 260,630 540,690 720,590 C 900,690 1180,630 1490,770 L 1490,900 L -50,900 Z"
+                fill="url(#ridgeForeground)"
+                className={`transition-all duration-1400 delay-300 ease-out ${
+                  introScene === "fog" ? "opacity-0 translate-y-16" : "opacity-80 translate-y-0"
+                }`}
+              />
+
+              {/* 4. Atmospheric Fog Banks:
+                  In Scene A: Centered and dense (0.98 opacity), covering mountains and landscape.
+                  In Scene B: Spreads outward to left and right edges, clearing the mountain center. */}
+              <g filter="url(#introFogHeavy)" className="pointer-events-none">
+                {/* Left Fog Bank */}
+                <ellipse
+                  cx={introScene === "fog" ? "520" : "140"}
+                  cy="450"
+                  rx="620"
+                  ry="350"
+                  fill="#FAF7F2"
+                  fillOpacity={introScene === "fog" ? "0.98" : "0.22"}
+                  className="transition-all duration-1600 ease-cinematic"
+                />
+                {/* Right Fog Bank */}
+                <ellipse
+                  cx={introScene === "fog" ? "920" : "1300"}
+                  cy="450"
+                  rx="640"
+                  ry="360"
+                  fill="#F5F0E7"
+                  fillOpacity={introScene === "fog" ? "0.98" : "0.18"}
+                  className="transition-all duration-1600 ease-cinematic"
+                />
+                {/* Center Fog Veil (Clears completely in Scene B) */}
+                <ellipse
+                  cx="720"
+                  cy="420"
+                  rx="500"
+                  ry="300"
+                  fill="#FAF7F2"
+                  fillOpacity={introScene === "fog" ? "0.96" : "0"}
+                  className="transition-all duration-1400 ease-out"
+                />
+              </g>
+            </svg>
+          </div>
+        </div>
+      )}
     </section>
   );
 }
