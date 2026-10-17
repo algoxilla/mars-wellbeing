@@ -141,6 +141,10 @@ body {
   animation: breatheExpand 8s ease-in-out infinite;
 }
 
+.ease-cinematic {
+  transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, ::before, ::after {
     animation-duration: 0.001ms !important;

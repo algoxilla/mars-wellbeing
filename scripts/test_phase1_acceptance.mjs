@@ -120,7 +120,7 @@ async function runTests() {
   await reducedPage.goto("http://localhost:3000/");
   await reducedPage.waitForTimeout(500);
   const isSkipButtonAbsent = await reducedPage.evaluate(() => {
-    return !document.body.textContent.includes("Skip opening");
+    return !document.body.textContent.includes("Skip intro") && !document.body.textContent.includes("Skip opening");
   });
   console.log(`  ✓ Reduced motion renders immediately without intro: ${isSkipButtonAbsent}`);
 
