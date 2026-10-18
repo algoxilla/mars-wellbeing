@@ -57,7 +57,7 @@ export default function HowItWorksPage() {
                   Nova Hikari Journey
                 </p>
                 <p className="mt-4 text-sm text-[#3D5255] leading-relaxed">
-                  Start with Stages 01 and 02 for free. Engage with quiet somatic pacing and reflective writing in complete privacy. Ideal for daily decompression and gentle cognitive untangling.
+                  Start with foundational Stages 01 and 02. Engage with quiet somatic pacing and reflective writing in complete privacy. Ideal for daily decompression and gentle cognitive untangling.
                 </p>
               </div>
 

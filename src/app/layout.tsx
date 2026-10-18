@@ -1,28 +1,24 @@
 import React, { Suspense } from "react";
 import type { Metadata } from "next";
-import { Barlow_Condensed, Montserrat } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
 import { CrisisBar } from "@/components/layout/CrisisBar";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { AmbientAudioProvider } from "@/context/AmbientAudioContext";
+import { ScrollToTopButton } from "@/components/ui/ScrollToTopButton";
+import { WelcomeModal } from "@/components/ui/WelcomeModal";
 
-const barlowCondensed = Barlow_Condensed({
+const inter = Inter({
   subsets: ["latin"],
-  weight: ["500", "600", "700"],
-  variable: "--font-display",
-  display: "swap",
-});
-
-const montserrat = Montserrat({
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
-  variable: "--font-body",
+  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-sans",
   display: "swap",
 });
 
 export const metadata: Metadata = {
   title: {
-    default: "MARS Wellbeing — Spaces for Pause, Reconnection & Support",
+    default: "MARS Wellbeing — Make space for yourself",
     template: "%s | MARS Wellbeing",
   },
   description:
@@ -46,15 +42,19 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${barlowCondensed.variable} ${montserrat.variable} h-full scroll-smooth antialiased`}
+      className={`${inter.variable} h-full scroll-smooth antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-[#F5F0E7] text-[#1D3033] font-sans selection:bg-[#1D3033] selection:text-[#F5F0E7]">
-        <CrisisBar />
-        <Suspense fallback={<div className="h-20 bg-[#F5F0E7]/95 border-b border-[#E2DDD5]" />}>
-          <Header />
-        </Suspense>
-        <main className="flex-1 flex flex-col">{children}</main>
-        <Footer />
+      <body className="min-h-full flex flex-col bg-[#FFFFFF] text-[#1D1D1F] font-sans selection:bg-[#1D1D1F] selection:text-[#FFFFFF]">
+        <AmbientAudioProvider>
+          <CrisisBar />
+          <Suspense fallback={<div className="h-[44px] bg-[#FFFFFF]/85 border-b border-[#D2D2D7]/60" />}>
+            <Header />
+          </Suspense>
+          <main className="flex-1 flex flex-col">{children}</main>
+          <Footer />
+          <ScrollToTopButton />
+          <WelcomeModal />
+        </AmbientAudioProvider>
       </body>
     </html>
   );

@@ -27,8 +27,8 @@ export const FAQ_DATA: FAQItem[] = [
   },
   {
     category: "Nova Hikari",
-    question: "Are Stages 01 and 02 really free?",
-    answer: "Yes. Stages 01 (Origin) and 02 (Grounding) are permanently free to experience with no payment details or mandatory account creation required.",
+    question: "How do I get started with Nova Hikari?",
+    answer: "You can explore foundational stages (Origin and Grounding) immediately via self-guided practice in your browser, with 100% private local reflections and no tracking.",
   },
   {
     category: "Nova Hikari",

@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
-import { DevelopmentNotice } from "@/components/ui/DevelopmentNotice";
-import { BookOpen, ArrowRight, Clock, Tag, Sparkles } from "lucide-react";
+import Image from "next/image";
+import { BookOpen, ArrowRight, Clock, Tag, ChevronRight } from "lucide-react";
 
 export const SAMPLE_ARTICLES = [
   {
@@ -48,103 +48,86 @@ export const SAMPLE_ARTICLES = [
 
 export default function JournalPage() {
   return (
-    <div className="flex flex-col bg-[#F5F0E7]">
-      {/* 1. Header Hero */}
-      <section className="py-20 sm:py-28 border-b border-[#E2DDD5] bg-[#FAF7F2] text-center">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <span className="text-xs font-semibold tracking-widest uppercase text-[#6E8E7E] block mb-3">
+    <div className="flex flex-col bg-[#FFFFFF] text-[#1D1D1F]">
+      {/* 1. Apple Hero Section */}
+      <section className="relative pt-12 sm:pt-20 pb-16 sm:pb-20 border-b border-[#D2D2D7]/60 overflow-hidden text-center">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6">
+          <span className="text-xs font-semibold tracking-widest uppercase text-[#6E6E73] block mb-2 sm:mb-3">
             Publications & Contemplations
           </span>
-          <h1 className="font-display text-4xl sm:text-6xl font-bold uppercase tracking-tight text-[#1D3033] leading-none">
-            The Journal of Quiet Practice
+
+          <h1 className="font-sans font-semibold tracking-tight text-[#1D1D1F] text-4xl sm:text-6xl md:text-7xl leading-[1.05] text-balance">
+            The Journal of Quiet Practice.
           </h1>
-          <p className="mt-6 text-base sm:text-lg text-[#3D5255] max-w-2xl mx-auto leading-relaxed">
-            Thoughtful essays and somatic inquiries on cognitive decompression, sustainable focus, and the art of unhurried human connection.
+
+          <p className="mt-4 text-base sm:text-xl text-[#6E6E73] font-normal leading-relaxed max-w-xl mx-auto text-balance">
+            Thoughtful essays and somatic inquiries on cognitive preservation, human connection, and autonomic nervous system regulation.
           </p>
         </div>
-      </section>
 
-      {/* 2. Featured Lead Essay */}
-      <section className="py-20 bg-[#F5F0E7] border-b border-[#E2DDD5]">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-[#FAF7F2] p-8 sm:p-14 border border-[#E2DDD5] flex flex-col justify-between group hover:border-[#6E8E7E] transition-all">
-            <div>
-              <div className="flex items-center gap-3 text-xs text-[#6E8E7E] font-medium mb-4">
-                <span className="uppercase tracking-wider font-semibold">Featured Lead Essay</span>
-                <span>•</span>
-                <span>{SAMPLE_ARTICLES[0].category}</span>
-                <span>•</span>
-                <span>{SAMPLE_ARTICLES[0].readTime}</span>
-              </div>
-
-              <h2 className="font-display text-3xl sm:text-5xl font-bold uppercase text-[#1D3033] leading-tight max-w-4xl">
-                {SAMPLE_ARTICLES[0].title}
-              </h2>
-
-              <p className="mt-6 text-base sm:text-lg text-[#3D5255] max-w-3xl leading-relaxed">
-                {SAMPLE_ARTICLES[0].excerpt}
-              </p>
-            </div>
-
-            <div className="pt-8 border-t border-[#E2DDD5] mt-10 flex flex-wrap items-center justify-between gap-4">
-              <span className="text-xs font-mono text-[#3D5255]/70">
-                Sample Article — Phase 1 Demonstration
-              </span>
-              <Link
-                href={`/journal/${SAMPLE_ARTICLES[0].slug}`}
-                className="inline-flex items-center gap-2 px-6 py-3 text-xs font-semibold uppercase tracking-wider bg-[#1D3033] text-[#F5F0E7] hover:bg-[#284145] transition-all"
-              >
-                <span>Read Full Essay</span>
-                <ArrowRight className="w-3.5 h-3.5 text-[#8FA89B]" />
-              </Link>
-            </div>
+        {/* Flagship Journal Image */}
+        <div className="max-w-[1280px] mx-auto px-3 sm:px-6 mt-10 sm:mt-14">
+          <div className="relative aspect-[16/10] sm:aspect-[21/9] w-full rounded-[20px] sm:rounded-[32px] overflow-hidden bg-[#F5F5F7] shadow-sm">
+            <Image
+              src="/images/mindful-journaling.jpg"
+              alt="Open linen journal with handwritten reflections and ceramic tea on oak table"
+              fill
+              priority
+              sizes="(max-width: 1280px) 100vw, 1280px"
+              className="object-cover object-center"
+            />
           </div>
         </div>
       </section>
 
-      {/* 3. Secondary Essays Grid */}
-      <section className="py-20 bg-[#FAF7F2] border-b border-[#E2DDD5]">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {SAMPLE_ARTICLES.slice(1).map((article) => (
+      {/* 2. Articles Grid */}
+      <section className="py-14 sm:py-20 bg-[#F5F5F7]">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {SAMPLE_ARTICLES.map((article) => (
               <div
                 key={article.slug}
-                className="bg-[#F5F0E7] p-8 border border-[#E2DDD5] flex flex-col justify-between hover:border-[#6E8E7E] transition-all space-y-6"
+                className="bg-[#FFFFFF] border border-[#D2D2D7]/70 rounded-[20px] p-6 sm:p-8 flex flex-col justify-between hover:border-[#1D1D1F]/40 transition-colors shadow-xs"
               >
                 <div>
-                  <div className="flex items-center justify-between text-xs text-[#6E8E7E] font-medium pb-3 border-b border-[#E2DDD5]">
-                    <span className="uppercase tracking-wider">{article.category}</span>
-                    <span>{article.readTime}</span>
+                  <div className="flex items-center justify-between pb-3 border-b border-[#D2D2D7]/60">
+                    <span className="text-[11px] font-semibold uppercase tracking-wider text-[#D96C68]">
+                      {article.category}
+                    </span>
+                    <span className="text-xs text-[#6E6E73] flex items-center gap-1">
+                      <Clock className="w-3 h-3 text-[#1D1D1F]" />
+                      <span>{article.readTime}</span>
+                    </span>
                   </div>
 
-                  <h3 className="font-display text-2xl font-bold uppercase text-[#1D3033] mt-4 leading-snug">
+                  <h3 className="font-sans text-xl font-semibold text-[#1D1D1F] mt-4 leading-snug">
                     {article.title}
                   </h3>
 
-                  <p className="mt-3 text-xs text-[#3D5255] leading-relaxed">
+                  <p className="text-xs text-[#6E6E73] mt-2 leading-relaxed">
                     {article.excerpt}
                   </p>
                 </div>
 
-                <div className="pt-4 border-t border-[#E2DDD5] flex items-center justify-between">
-                  <span className="text-[10px] font-mono text-[#3D5255]/70">Demo Content</span>
-                  <Link
-                    href={`/journal/${article.slug}`}
-                    className="inline-flex items-center gap-1 text-xs font-semibold uppercase tracking-wider text-[#1D3033] hover:text-[#4A6E5D]"
-                  >
+                <div className="pt-6 mt-6 border-t border-[#D2D2D7]/60 flex items-center justify-between text-xs">
+                  <span className="text-[#6E6E73]">{article.date}</span>
+                  <span className="inline-flex items-center gap-1 font-semibold text-[#1D1D1F] hover:text-[#D96C68] transition-colors">
                     <span>Read Article</span>
-                    <ArrowRight className="w-3.5 h-3.5 text-[#6E8E7E]" />
-                  </Link>
+                    <ChevronRight className="w-3.5 h-3.5 text-[#D96C68]" />
+                  </span>
                 </div>
               </div>
             ))}
           </div>
 
-          <DevelopmentNotice
-            phase="Phase 1 Demonstration"
-            featureTitle="Journal Publications"
-            description="The essays above illustrate the contemplative, psychoeducational editorial direction of MARS. Interactive reading bookmarks and audio editions will be enabled in Phase 2."
-          />
+          <div className="pt-10 text-center">
+            <Link
+              href="/"
+              className="text-xs font-medium text-[#1D1D1F] hover:text-[#D96C68] transition-colors"
+            >
+              ← Return to MARS Home
+            </Link>
+          </div>
         </div>
       </section>
     </div>

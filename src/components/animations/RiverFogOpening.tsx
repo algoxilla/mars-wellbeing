@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState, useRef, useCallback } from "react";
 import Link from "next/link";
-import { ArrowRight, Compass, X, RotateCcw } from "lucide-react";
+import { ArrowRight, Compass, X, RotateCcw, Phone, Sparkles } from "lucide-react";
 
 type IntroScene =
   | "fog" // Scene A: Full-screen atmospheric fog (0.0s - 1.4s)
@@ -84,10 +84,14 @@ export function RiverFogOpening() {
       return;
     }
 
-    // Check session policy for returning visitors
+    // Check session policy for returning visitors or explicit skip query parameter
     let hasSeen = false;
     try {
-      hasSeen = sessionStorage.getItem("mars_has_seen_opening") === "true";
+      if (typeof window !== "undefined" && window.location.search.includes("skip=true")) {
+        hasSeen = true;
+      } else {
+        hasSeen = sessionStorage.getItem("mars_has_seen_opening") === "true";
+      }
     } catch (_) {}
 
     if (hasSeen) {
@@ -116,94 +120,19 @@ export function RiverFogOpening() {
 
   return (
     <section
+      id="hero-arrival"
       aria-label="Welcome to MARS Wellbeing"
-      className="relative min-h-[92vh] flex items-center justify-center overflow-hidden bg-[#F5F0E7] border-b border-[#E2DDD5]"
+      className="relative min-h-[92vh] flex items-center justify-center overflow-hidden bg-transparent border-b border-[#E3E9DE] text-[#1B2926]"
     >
       {/* =========================================================================
           PART 1: THE LIVING HOMEPAGE HERO (Rendered Directly Behind the Doors)
           ========================================================================= */}
 
-      {/* 1. Dawn Sky & Morning Light Radial Gradient */}
+      {/* 1. Atmospheric Ambient Radial Glow */}
       <div
         aria-hidden="true"
-        className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_80%_60%_at_50%_0%,rgba(244,211,201,0.35)_0%,rgba(235,241,237,0.4)_50%,transparent_85%)]"
+        className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_70%_50%_at_50%_20%,rgba(227,233,222,0.5)_0%,transparent_80%)]"
       />
-
-      {/* 2. Topographic & Natural Landscape Layers with Living River (SVG) */}
-      <div
-        aria-hidden="true"
-        className="absolute inset-0 w-full h-full pointer-events-none overflow-hidden"
-      >
-        <svg
-          viewBox="0 0 1440 800"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          preserveAspectRatio="xMidYMid slice"
-          className="w-full h-full"
-        >
-          <defs>
-            <linearGradient id="heroRiverGrad" x1="15%" y1="0%" x2="85%" y2="100%">
-              <stop offset="0%" stopColor="#4A6E5D" stopOpacity="0.35" />
-              <stop offset="25%" stopColor="#6E8E7E" stopOpacity="0.85" />
-              <stop offset="60%" stopColor="#23453D" stopOpacity="0.9" />
-              <stop offset="88%" stopColor="#1D3033" stopOpacity="0.85" />
-              <stop offset="100%" stopColor="#C26D53" stopOpacity="0.75" />
-            </linearGradient>
-
-            <linearGradient id="heroSunHighlight" x1="0%" y1="50%" x2="100%" y2="50%">
-              <stop offset="0%" stopColor="#FAF7F2" stopOpacity="0.7" />
-              <stop offset="50%" stopColor="#EAF1ED" stopOpacity="0.95" />
-              <stop offset="100%" stopColor="#FAF7F2" stopOpacity="0.4" />
-            </linearGradient>
-
-            <filter id="heroFogBlur" x="-30%" y="-30%" width="160%" height="160%">
-              <feGaussianBlur stdDeviation="35" />
-            </filter>
-          </defs>
-
-          {/* Distant Mountain Silhouettes in Soft Sage Mist */}
-          <path
-            d="M-50,260 C240,190 480,240 720,180 C980,120 1220,210 1500,160 L1500,400 L-50,400 Z"
-            fill="#9EB5AA"
-            fillOpacity="0.14"
-          />
-          <path
-            d="M-50,310 C180,230 460,280 760,220 C1060,160 1280,270 1500,230 L1500,450 L-50,450 Z"
-            fill="#85A394"
-            fillOpacity="0.18"
-          />
-
-          {/* Natural River Flow: Riverbed base & Living water ribbon */}
-          <path
-            d="M 680,170 C 720,240 580,310 420,380 C 220,470 120,590 180,720 C 220,800 380,860 620,840 C 920,810 1180,880 1520,820"
-            stroke="#DCD5C9"
-            strokeWidth="36"
-            strokeLinecap="round"
-            className="opacity-50"
-          />
-          <path
-            d="M 680,170 C 720,240 580,310 420,380 C 220,470 120,590 180,720 C 220,800 380,860 620,840 C 920,810 1180,880 1520,820"
-            stroke="url(#heroRiverGrad)"
-            strokeWidth="14"
-            strokeLinecap="round"
-            className="opacity-85"
-          />
-          <path
-            d="M 680,170 C 720,240 580,310 420,380 C 220,470 120,590 180,720 C 220,800 380,860 620,840 C 920,810 1180,880 1520,820"
-            stroke="url(#heroSunHighlight)"
-            strokeWidth="2.5"
-            strokeDasharray="16 20"
-            strokeLinecap="round"
-            className="opacity-85"
-          />
-
-          {/* Soft ambient valley mist */}
-          <g filter="url(#heroFogBlur)" className="pointer-events-none opacity-20">
-            <ellipse cx="280" cy="460" rx="460" ry="180" fill="#FAF7F2" />
-            <ellipse cx="1180" cy="380" rx="520" ry="210" fill="#F4D3C9" />
-          </g>
-        </svg>
-      </div>
 
       {/* 3. Replay Atmosphere Button (Available when settled) */}
       <div className="absolute top-5 right-5 sm:top-7 sm:right-8 z-30 flex items-center gap-2">
@@ -211,111 +140,92 @@ export function RiverFogOpening() {
           <button
             type="button"
             onClick={handleReplay}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-[#3D5255] hover:text-[#1D3033] bg-[#FAF7F2]/90 hover:bg-[#FAF7F2] border border-[#E2DDD5] rounded-xs transition-all shadow-2xs cursor-pointer focus:outline-none focus:ring-1 focus:ring-[#6E8E7E]"
+            className="inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-medium text-[#153D35] hover:text-[#1B2926] bg-[#E3E9DE]/80 hover:bg-[#E3E9DE] border border-[#A8B9A2]/60 rounded-full transition-all shadow-xs cursor-pointer focus:outline-none focus:ring-1 focus:ring-[#153D35]"
             title="Replay opening experience"
             aria-label="Replay atmosphere"
           >
-            <RotateCcw className="w-3.5 h-3.5 text-[#6E8E7E]" />
+            <RotateCcw className="w-3.5 h-3.5 text-[#153D35]" />
             <span className="hidden sm:inline">Replay atmosphere</span>
           </button>
         )}
       </div>
 
-      {/* 4. Main Hero Typography & Action Content */}
-      <div className="relative z-20 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24 text-center flex flex-col items-center">
-        {/* Editorial Eyebrow Tag */}
-        <div className="inline-flex items-center gap-2.5 px-4 py-1.5 mb-6 text-xs font-semibold tracking-wider uppercase text-[#1D3033] bg-[#FAF7F2]/90 border border-[#E2DDD5] shadow-2xs backdrop-blur-xs">
-          <span className="w-2 h-2 rounded-full bg-[#6E8E7E] animate-pulse" aria-hidden="true" />
-          <span>Bengaluru, India — Initial Individual & Cohort Spaces</span>
-        </div>
+      {/* 4. Main Hero Typography & Action Content — Founder Copy & High-Contrast Sanctuary Card */}
+      <div className="relative z-20 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24 text-center flex flex-col items-center">
+        <div className="w-full bg-[#FAF7F2]/90 backdrop-blur-md border border-[#A8B9A2]/50 shadow-2xl rounded-3xl p-6 sm:p-12 md:p-14 flex flex-col items-center transition-all duration-700">
+          {/* Eyebrow */}
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 mb-6 text-xs font-bold tracking-widest uppercase text-[#C9A15A] bg-[#E3E9DE]/80 border border-[#A8B9A2]/50 rounded-full shadow-xs">
+            <Sparkles className="w-3.5 h-3.5 text-[#C9A15A]" />
+            <span>A SPACE TO PAUSE &bull; A PLACE TO CONNECT</span>
+          </div>
 
-        {/* Primary Slogan & Secondary Line */}
-        <div className="space-y-3 max-w-5xl mx-auto w-full">
-          {/* Desktop & Tablet Display Heading */}
-          <div className="hidden sm:block">
-            <h1 className="font-display font-bold tracking-tight uppercase text-[#1D3033]">
-              <span className="block text-5xl sm:text-7xl md:text-8xl lg:text-[96px] xl:text-[104px] leading-[0.92]">
-                BRINGING PEOPLE
-              </span>
-              <span className="block text-5xl sm:text-7xl md:text-8xl lg:text-[96px] xl:text-[104px] leading-[0.92]">
-                BACK TO THEMSELVES
-              </span>
+          {/* Primary Headline */}
+          <div className="space-y-4 max-w-3xl mx-auto w-full">
+            <h1 className="font-display font-bold tracking-tight text-[#153D35] text-3xl sm:text-5xl md:text-6xl lg:text-[68px] leading-[1.08]">
+              Life moves fast. Make space for yourself.
             </h1>
           </div>
 
-          {/* Mobile Display Heading (Intentionally Composed) */}
-          <div className="block sm:hidden">
-            <h1 className="font-display font-bold tracking-tight uppercase text-[#1D3033]">
-              <span className="block text-[38px] xs:text-[42px] leading-[0.94]">BRINGING</span>
-              <span className="block text-[38px] xs:text-[42px] leading-[0.94]">PEOPLE BACK</span>
-              <span className="block text-[38px] xs:text-[42px] leading-[0.94]">TO THEMSELVES</span>
-            </h1>
+          {/* Clear Platform Explanation */}
+          <p className="mt-5 sm:mt-7 text-base sm:text-lg text-[#1B2926]/90 font-light leading-relaxed max-w-2xl mx-auto">
+            MARS is an Indo-Japanese-inspired wellbeing sanctuary bringing together immersive guided reflection (Nova Hikari), facilitated community circles, and pathways to certified clinical healthcare.
+          </p>
+
+          {/* Action CTAs: Explore Your Journey & Talk to Our Team */}
+          <div className="mt-8 sm:mt-10 flex flex-col sm:flex-row items-center justify-center gap-4 w-full sm:w-auto">
+            <Link
+              href="#nova-hikari"
+              className="group relative w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-4 text-sm font-semibold uppercase tracking-wider bg-[#153D35] text-[#F5F0E7] hover:bg-[#1B2926] active:scale-[0.98] rounded-full transition-all shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#153D35]"
+            >
+              <span>Explore Your Journey</span>
+              <ArrowRight className="w-4 h-4 text-[#C9A15A] transition-transform duration-300 ease-out group-hover:translate-x-1" />
+            </Link>
+
+            <a
+              href="tel:+919006219668"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-7 py-4 text-sm font-semibold tracking-wide bg-[#FFFFFF] hover:bg-[#F5F0E7] text-[#153D35] border border-[#A8B9A2]/60 rounded-full transition-all shadow-xs group"
+            >
+              <Phone className="w-4 h-4 text-[#C9A15A] group-hover:scale-110 transition-transform" />
+              <span>Talk to Our Team</span>
+              <span className="text-xs text-[#65716A] hidden sm:inline font-mono">(&#43;91 90062 19668)</span>
+            </a>
           </div>
 
-          {/* Secondary Line */}
-          <div className="pt-2 sm:pt-4">
-            <p className="font-sans text-xs sm:text-sm md:text-base font-semibold tracking-[0.25em] sm:tracking-[0.32em] uppercase text-[#4A6E5D]">
-              Inner Balance. Real Connection.
-            </p>
+          {/* Trust and Feature Proof Badges */}
+          <div className="mt-8 pt-6 border-t border-[#A8B9A2]/30 w-full flex flex-wrap items-center justify-center gap-y-2 gap-x-6 text-xs text-[#65716A]">
+            <span className="inline-flex items-center gap-1.5 font-medium text-[#153D35]">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#C9A15A]" />
+              10-Stage Guided Journey
+            </span>
+            <span className="inline-flex items-center gap-1.5 font-medium text-[#153D35]">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#C9A15A]" />
+              Facilitated Bengaluru Circles
+            </span>
+            <span className="inline-flex items-center gap-1.5 font-medium text-[#153D35]">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#C9A15A]" />
+              Partnered with Highland Care
+            </span>
+            <Link
+              href="#early-access"
+              className="text-[#C9A15A] hover:underline font-semibold ml-1"
+            >
+              Join Early Access &rarr;
+            </Link>
           </div>
         </div>
 
-        {/* Supporting Narrative */}
-        <p className="mt-6 sm:mt-8 text-base sm:text-lg lg:text-xl text-[#3D5255] font-normal leading-relaxed max-w-2xl mx-auto">
-          An intentional mental wellbeing sanctuary rooted in Bengaluru. Uniting <strong>Nova Hikari</strong>—a slow ten-stage guided journey—with intimate community circles and qualified, verified professional care.
-        </p>
-
-        {/* Action CTAs */}
-        <div className="mt-8 sm:mt-10 flex flex-col sm:flex-row items-center justify-center gap-4 w-full sm:w-auto">
-          <Link
-            href="/nova-hikari"
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-4 text-xs sm:text-sm font-semibold uppercase tracking-wider bg-[#1D3033] text-[#F5F0E7] hover:bg-[#284145] active:scale-[0.99] border border-[#1D3033] transition-all shadow-xs"
+        {/* Scroll Indicator */}
+        <div className="mt-8 sm:mt-10 flex flex-col items-center">
+          <a
+            href="#what-is-mars"
+            className="group flex flex-col items-center gap-2 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#153D35]"
+            aria-label="Scroll down to discover What Is MARS"
           >
-            <span>Begin Nova Hikari</span>
-            <ArrowRight className="w-4 h-4 text-[#8FA89B]" />
-          </Link>
-
-          <Link
-            href="/professionals"
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-4 text-xs sm:text-sm font-semibold uppercase tracking-wider bg-[#FAF7F2] text-[#1D3033] hover:bg-[#ECE5DA] border border-[#E2DDD5] transition-all"
-          >
-            <Compass className="w-4 h-4 text-[#6E8E7E]" />
-            <span>Browse Directory</span>
-          </Link>
-
-          <Link
-            href="/early-access"
-            className="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 text-xs sm:text-sm font-semibold uppercase tracking-wider text-[#1D3033] hover:text-[#4A6E5D] underline underline-offset-4 transition-colors"
-          >
-            Join Early Access →
-          </Link>
-        </div>
-
-        {/* Reassurance Grid */}
-        <div className="mt-12 sm:mt-14 pt-8 border-t border-[#E2DDD5]/70 grid grid-cols-2 md:grid-cols-4 gap-6 text-left max-w-3xl w-full">
-          <div className="space-y-0.5">
-            <span className="text-[11px] font-semibold tracking-wider uppercase text-[#6E8E7E]">Self-Guided</span>
-            <p className="text-xs text-[#1D3033] font-medium">Nova Hikari (10 Stages)</p>
-            <p className="text-[11px] text-[#3D5255]/80">Slow, private, unhurried</p>
-          </div>
-
-          <div className="space-y-0.5">
-            <span className="text-[11px] font-semibold tracking-wider uppercase text-[#6E8E7E]">Community</span>
-            <p className="text-xs text-[#1D3033] font-medium">Bengaluru Circles</p>
-            <p className="text-[11px] text-[#3D5255]/80">Small, facilitated gatherings</p>
-          </div>
-
-          <div className="space-y-0.5">
-            <span className="text-[11px] font-semibold tracking-wider uppercase text-[#6E8E7E]">Clinical Care</span>
-            <p className="text-xs text-[#1D3033] font-medium">Qualified Directory</p>
-            <p className="text-[11px] text-[#3D5255]/80">Transparent credentials</p>
-          </div>
-
-          <div className="space-y-0.5">
-            <span className="text-[11px] font-semibold tracking-wider uppercase text-[#C26D53]">Safety Boundaries</span>
-            <p className="text-xs text-[#1D3033] font-medium">Crisis Escalation</p>
-            <p className="text-[11px] text-[#3D5255]/80">24/7 National helplines</p>
-          </div>
+            <span className="text-[11px] font-mono uppercase tracking-[0.22em] text-[#65716A] group-hover:text-[#153D35] transition-colors">
+              Scroll to explore
+            </span>
+            <div className="w-[1.5px] h-8 bg-gradient-to-b from-[#A8B9A2] to-transparent animate-pulse" />
+          </a>
         </div>
       </div>
 
