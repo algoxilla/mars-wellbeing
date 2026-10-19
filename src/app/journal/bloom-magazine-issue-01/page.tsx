@@ -79,18 +79,19 @@ export default function BloomMagazineIssue01Page() {
           </p>
 
           <div className="mt-8 pt-6 border-t border-[#D2D2D7]/60 flex flex-wrap items-center justify-between gap-4 text-xs text-[#6E6E73]">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full overflow-hidden bg-[#E5E5EA] relative shrink-0 border border-[#D2D2D7]">
+            <div className="flex items-center gap-3.5">
+              <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full overflow-hidden bg-[#E5E5EA] relative shrink-0 border-2 border-[#D2D2D7] shadow-sm">
                 <Image
-                  src="/images/bloom-doctor-consultation.jpg"
-                  alt="Dr. Uzma Jahan - Medical Director"
+                  src="/images/dr-uzma-dixit-avatar.jpg"
+                  alt="Dr. Uzma Dixit - Consultant Gynaecologist & Women's Health Specialist"
                   fill
-                  className="object-cover"
+                  priority
+                  className="object-cover object-center"
                 />
               </div>
               <div>
-                <p className="font-semibold text-[#1D1D1F]">Dr. Uzma Jahan</p>
-                <p>Medical Director, Highland Care Multispecialty Hospital</p>
+                <p className="font-semibold text-[#1D1D1F] text-sm">Dr. Uzma Dixit</p>
+                <p className="text-xs text-[#6E6E73]">Consultant Gynaecologist &amp; Women&apos;s Health Specialist • Highland Care</p>
               </div>
             </div>
 
@@ -112,13 +113,13 @@ export default function BloomMagazineIssue01Page() {
       {/* 3. Article Content Container */}
       <div className="max-w-3xl mx-auto px-4 sm:px-6 py-12 sm:py-16 space-y-16">
         {/* Cover Feature Card */}
-        <div className="relative aspect-[16/9] w-full rounded-2xl sm:rounded-3xl overflow-hidden bg-[#0A0D18] border border-[#D2D2D7]/80 shadow-md flex items-center justify-center p-4">
+        <div className="relative aspect-[16/9] w-full rounded-2xl sm:rounded-3xl overflow-hidden bg-[#0F172A] border border-[#D2D2D7]/80 shadow-md">
           <Image
             src="/images/bloom-magazine-issue-01.jpg"
-            alt="BLOOM Magazine Issue 01 official cover artwork"
+            alt="BLOOM Magazine Issue 01: Women's Health & Somatic Balance by Dr. Uzma Dixit"
             fill
             priority
-            className="object-contain object-center p-3"
+            className="object-cover object-center"
           />
         </div>
 
@@ -151,7 +152,7 @@ export default function BloomMagazineIssue01Page() {
                 “Prevention is not a one-time appointment. It is a habit we build together, one informed choice at a time.”
               </p>
               <footer className="mt-3 text-sm text-[#6E6E73] font-normal">
-                — Dr. Uzma Jahan, Medical Director &amp; Founder of Highland Health
+                — Dr. Uzma Dixit, Consultant Gynaecologist &amp; Medical Director, Highland Care
               </footer>
             </blockquote>
 
@@ -161,18 +162,19 @@ export default function BloomMagazineIssue01Page() {
           </div>
         </section>
 
-        {/* Visual Break 1: Clinical Consultation */}
-        <div className="space-y-2">
-          <div className="relative aspect-[16/9] w-full rounded-2xl overflow-hidden bg-[#F5F5F7] border border-[#D2D2D7]/60 shadow-xs">
+        {/* Visual Break 1: Dr. Uzma Dixit Consultation Portrait */}
+        <div className="space-y-3">
+          <div className="relative aspect-[16/10] max-w-2xl mx-auto rounded-2xl overflow-hidden bg-[#F5F5F7] border border-[#D2D2D7]/80 shadow-md">
             <Image
-              src="/images/bloom-doctor-consultation.jpg"
-              alt="Physician consultation in quiet healthcare sanctuary"
+              src="/images/dr-uzma-dixit-consultation.jpg"
+              alt="Dr. Uzma Dixit, Consultant Gynaecologist & Women's Health Specialist at Highland Care Multispecialty Hospital"
               fill
-              className="object-cover object-center"
+              priority
+              className="object-contain sm:object-cover object-center"
             />
           </div>
-          <p className="text-xs text-[#86868B] text-center italic">
-            Clinical continuity and compassionate consultation at Highland Care Multispecialty Hospital.
+          <p className="text-xs text-[#6E6E73] text-center font-medium">
+            Dr. Uzma Dixit, Consultant Gynaecologist &amp; Women&apos;s Health Specialist at Highland Care Multispecialty Hospital.
           </p>
         </div>
 

@@ -17,12 +17,12 @@ const TEAM = [
     photo: "/team/dr-uzma-dixit.jpg",
   },
   {
-    name: "Dr. Raghav Jha",
+    name: "Raghav Jha",
     role: "Ecosystem Partnerships",
     photo: "/team/dr-raghav-jha.jpg",
   },
   {
-    name: "Dr. Shreyansh Ojha",
+    name: "Shreyansh Ojha",
     role: "Clinical Innovation",
     photo: "/team/dr-shreyansh-ojha.jpg",
   },
@@ -201,14 +201,14 @@ export function AppleTrustStorySection() {
             </div>
 
             {/* Authentic BLOOM Magazine Cover Presentation */}
-            <div className="relative w-full aspect-[16/9] rounded-2xl overflow-hidden mt-6 bg-[#0B0D18] border border-[#D2D2D7]/60 flex items-center justify-center shadow-inner">
+            <div className="relative w-full aspect-[16/9] rounded-2xl overflow-hidden mt-6 bg-[#0F172A] border border-[#D2D2D7]/60 shadow-inner">
               <Image
                 src="/images/bloom-magazine-issue-01.jpg"
-                alt="BLOOM Magazine Issue 01 cover featuring Highland Health runner emblem and wellness illumination"
+                alt="BLOOM Magazine Issue 01: Women's Health & Somatic Balance by Dr. Uzma Dixit"
                 fill
                 priority
                 sizes="(max-width: 768px) 100vw, 50vw"
-                className="object-contain object-center p-2"
+                className="object-cover object-center"
               />
             </div>
           </div>

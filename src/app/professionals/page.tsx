@@ -49,7 +49,7 @@ const CLINICAL_PRACTITIONERS: DoctorProfile[] = [
   },
   {
     id: "CLIN-03",
-    name: "Dr. Raghav Jha",
+    name: "Raghav Jha",
     qualification: "Healthcare Strategy & Clinical Ecosystems",
     speciality: "Integrative Mental Health Pathways & Community Health Systems",
     languages: ["English", "Hindi"],
@@ -59,7 +59,7 @@ const CLINICAL_PRACTITIONERS: DoctorProfile[] = [
   },
   {
     id: "CLIN-04",
-    name: "Dr. Shreyansh Ojha",
+    name: "Shreyansh Ojha",
     qualification: "Clinical Innovation & Digital Health",
     speciality: "Preventative Mental Health, Cognitive Pacing & Behavioral Protocols",
     languages: ["English", "Hindi"],

@@ -26,13 +26,13 @@ const TEAM = [
     photo: "/team/dr-uzma-dixit.jpg",
   },
   {
-    name: "Dr. Raghav Jha",
+    name: "Raghav Jha",
     role: "Ecosystem Partnerships & Operations",
     bio: "Building collaborative bridges between clinical healthcare providers, tech communities, and wellbeing sanctuaries.",
     photo: "/team/dr-raghav-jha.jpg",
   },
   {
-    name: "Dr. Shreyansh Ojha",
+    name: "Shreyansh Ojha",
     role: "Clinical Innovation & Digital Health Protocols",
     bio: "Designing evidence-backed contemplative workflows, autonomic resets, and digital wellbeing frameworks.",
     photo: "/team/dr-shreyansh-ojha.jpg",

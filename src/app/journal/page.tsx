@@ -9,7 +9,7 @@ export const SAMPLE_ARTICLES = [
     title: "BLOOM Magazine — Issue 01: Women's Health, Prevention & Somatic Balance.",
     category: "Official Publication",
     readTime: "12 min read",
-    author: "Dr. Uzma Jahan • Highland Care",
+    author: "Dr. Uzma Dixit • Highland Care",
     excerpt:
       "The inaugural health newsletter and clinical publication from Highland Care Multispecialty Hospital, examining adolescent cycle literacy, PCOS, preventative screenings, and metabolic health after 35.",
     date: "September 2026",
@@ -97,14 +97,14 @@ export default function JournalPage() {
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
               {/* Left Column: Authentic Cover Image */}
               <div className="lg:col-span-5 flex justify-center">
-                <div className="relative w-full max-w-[320px] aspect-[4/5] rounded-2xl overflow-hidden bg-[#0A0D18] border border-[#D2D2D7]/60 shadow-md">
+                <div className="relative w-full max-w-[400px] aspect-[16/10] sm:aspect-[4/3] rounded-2xl overflow-hidden bg-[#0F172A] border border-[#D2D2D7]/60 shadow-md">
                   <Image
                     src="/images/bloom-magazine-issue-01.jpg"
-                    alt="BLOOM Magazine Issue 01 cover featuring Highland Health runner emblem and wellness illumination"
+                    alt="BLOOM Magazine Issue 01: Women's Health & Somatic Balance by Dr. Uzma Dixit"
                     fill
                     priority
-                    sizes="(max-width: 1024px) 100vw, 320px"
-                    className="object-contain object-center p-3"
+                    sizes="(max-width: 1024px) 100vw, 400px"
+                    className="object-cover object-center"
                   />
                 </div>
               </div>

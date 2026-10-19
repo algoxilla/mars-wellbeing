@@ -61,7 +61,7 @@ const TEAM_MEMBERS: TeamMember[] = [
     bio: "Dr. Uzma Dixit is a renowned family physician and obstetrics professional with over 10 years of experience. Specialised in gynaecology and obstetrics treatments and known for excellent patient care.",
   },
   {
-    name: "Dr. Raghav Jha",
+    name: "Raghav Jha",
     initials: "RJ",
     photo: "/team/dr-raghav-jha.jpg",
     role: "MARS Core Team",
@@ -69,7 +69,7 @@ const TEAM_MEMBERS: TeamMember[] = [
     bio: "Contributing to the leadership, ecosystem partnerships, and institutional development of MARS Wellbeing.",
   },
   {
-    name: "Dr. Shreyansh Ojha",
+    name: "Shreyansh Ojha",
     initials: "SO",
     photo: "/team/dr-shreyansh-ojha.jpg",
     role: "MARS Core Team",
