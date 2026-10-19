@@ -187,10 +187,10 @@ export default function AboutPage() {
             </div>
 
             <div className="lg:col-span-6">
-              <div className="relative aspect-[16/10] w-full rounded-[20px] sm:rounded-[28px] overflow-hidden bg-[#FFFFFF] border border-[#D2D2D7]/70 shadow-sm">
+              <div className="relative aspect-[16/9] w-full rounded-[20px] sm:rounded-[28px] overflow-hidden bg-[#040907] border border-[#D2D2D7]/70 shadow-sm">
                 <Image
                   src="/milestones/bharat-mandapam-launch.jpg"
-                  alt="MARS presented on stage at Bharat Mandapam, New Delhi"
+                  alt="MARS launch presentation at Bharat Mandapam, New Delhi with the illuminated amphitheatre and Nataraja statue at night"
                   fill
                   loading="eager"
                   sizes="(max-width: 1024px) 100vw, 50vw"

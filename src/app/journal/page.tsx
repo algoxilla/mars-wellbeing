@@ -80,9 +80,90 @@ export default function JournalPage() {
         </div>
       </section>
 
-      {/* 2. Articles Grid */}
-      <section className="py-14 sm:py-20 bg-[#F5F5F7]">
+      {/* 2. Featured Healthcare Publication Showcase (Highland Care BLOOM Magazine) */}
+      <section className="py-12 sm:py-16 bg-[#F5F5F7] border-b border-[#D2D2D7]/60">
         <div className="max-w-5xl mx-auto px-4 sm:px-6">
+          <div className="bg-[#FFFFFF] border border-[#D2D2D7]/80 rounded-[24px] sm:rounded-[32px] p-6 sm:p-10 shadow-sm">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+              {/* Left Column: Authentic Cover Image */}
+              <div className="lg:col-span-5 flex justify-center">
+                <div className="relative w-full max-w-[320px] aspect-[4/5] rounded-2xl overflow-hidden bg-[#0A0D18] border border-[#D2D2D7]/60 shadow-md">
+                  <Image
+                    src="/images/bloom-magazine-issue-01.jpg"
+                    alt="BLOOM Magazine Issue 01 cover featuring Highland Health runner emblem and wellness illumination"
+                    fill
+                    priority
+                    sizes="(max-width: 1024px) 100vw, 320px"
+                    className="object-contain object-center p-3"
+                  />
+                </div>
+              </div>
+
+              {/* Right Column: Editorial Copy & Direct Working Links */}
+              <div className="lg:col-span-7 space-y-4">
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#F5F5F7] border border-[#D2D2D7]/80 text-[11px] font-semibold uppercase tracking-wider text-[#D96C68]">
+                  <span>Featured Publication • Highland Care Hospital</span>
+                </div>
+
+                <h2 className="font-sans text-2xl sm:text-4xl font-semibold tracking-tight text-[#1D1D1F] leading-tight">
+                  BLOOM Magazine — Issue 01
+                </h2>
+
+                <p className="text-sm sm:text-base text-[#6E6E73] leading-relaxed">
+                  The official health and wellbeing publication from Highland Care Multispeciality Hospital, examining preventative healthcare, clinical continuity, lifestyle balance, and compassionate patient medicine.
+                </p>
+
+                <div className="pt-2 flex flex-wrap gap-x-6 gap-y-2 text-xs text-[#6E6E73] border-t border-[#D2D2D7]/50">
+                  <div>
+                    <span className="font-semibold text-[#1D1D1F]">Publisher:</span> Highland Care
+                  </div>
+                  <div>
+                    <span className="font-semibold text-[#1D1D1F]">Edition:</span> Issue 01 (Highland Health)
+                  </div>
+                  <div>
+                    <span className="font-semibold text-[#1D1D1F]">Format:</span> Digital Flipbook &amp; PDF
+                  </div>
+                </div>
+
+                <div className="pt-4 flex flex-wrap items-center gap-3">
+                  <a
+                    href="https://hcmhospital.com/wp-content/uploads/2026/09/BLOOM_Issue01_Highland_Health_Revised-1.pdf"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 px-5 py-2.5 text-xs font-semibold text-[#FFFFFF] bg-[#D96C68] hover:bg-[#C65A57] active:scale-[0.98] rounded-full transition-all shadow-xs"
+                  >
+                    <span>Read Publication (PDF)</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </a>
+
+                  <a
+                    href="https://hcmhospital.com/blogs-magazines/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 px-4 py-2.5 text-xs font-medium text-[#1D1D1F] hover:bg-[#F5F5F7] border border-[#D2D2D7] rounded-full transition-colors"
+                  >
+                    <span>HCM Hospital Archive</span>
+                    <ArrowRight className="w-3.5 h-3.5 text-[#6E6E73]" />
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 3. Contemplative Essays Grid */}
+      <section className="py-14 sm:py-20 bg-[#FFFFFF]">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6">
+          <div className="mb-8">
+            <span className="text-xs font-semibold tracking-widest uppercase text-[#6E6E73] block mb-1">
+              Contemplative Practice Essays
+            </span>
+            <h2 className="font-sans text-2xl sm:text-3xl font-semibold tracking-tight text-[#1D1D1F]">
+              Quiet reflections for high-velocity minds.
+            </h2>
+          </div>
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {SAMPLE_ARTICLES.map((article) => (
               <div

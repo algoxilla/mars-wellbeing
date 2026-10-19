@@ -39,23 +39,23 @@ export function AppleTrustStorySection() {
         {/* Apple 2-Column Promotional Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
           {/* Tile 1: Highland Care Healthcare Partner */}
-          <div className="bg-[#F5F5F7] rounded-[20px] sm:rounded-[28px] overflow-hidden flex flex-col justify-between h-[480px] sm:h-[540px] p-8 sm:p-10 text-center relative border border-[#D2D2D7]/40 shadow-xs">
+          <div className="bg-[#F5F5F7] rounded-[20px] sm:rounded-[28px] overflow-hidden flex flex-col justify-between p-6 sm:p-9 text-center relative border border-[#D2D2D7]/50 shadow-xs">
             <div className="relative z-10 max-w-md mx-auto">
               <span className="text-xs font-semibold uppercase tracking-widest text-[#6E6E73] block mb-2">
                 Clinical Governance
               </span>
               <h3 className="font-sans text-2xl sm:text-3xl font-semibold tracking-tight text-[#1D1D1F]">
-                Highland Care.
+                Highland Care Hospital.
               </h3>
               <p className="mt-2 text-sm sm:text-base text-[#6E6E73] font-normal leading-relaxed">
-                Direct clinical continuity with accredited psychiatrists, psychologists, and specialized hospital care.
+                Direct clinical continuity with accredited psychiatrists, psychologists, and specialized hospital facilities.
               </p>
               <div className="mt-3.5">
                 <a
                   href="https://hcmhospital.com/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1 text-xs font-medium text-[#1D1D1F] hover:text-[#D96C68] transition-colors"
+                  className="inline-flex items-center gap-1 text-xs font-semibold text-[#1D1D1F] hover:text-[#D96C68] transition-colors"
                 >
                   <span>Visit Highland Care (hcmhospital.com)</span>
                   <ArrowUpRight className="w-3.5 h-3.5" />
@@ -63,7 +63,7 @@ export function AppleTrustStorySection() {
               </div>
             </div>
 
-            <div className="relative w-full h-[220px] sm:h-[260px] rounded-2xl overflow-hidden mt-6 bg-[#FFFFFF]">
+            <div className="relative w-full aspect-[16/9] rounded-2xl overflow-hidden mt-6 bg-[#FFFFFF] border border-[#D2D2D7]/50">
               <Image
                 src="/images/professional-care.jpg"
                 alt="Dignified clinical consultation room overlooking peaceful garden greenery"
@@ -76,7 +76,7 @@ export function AppleTrustStorySection() {
           </div>
 
           {/* Tile 2: Medical Leadership (4 Doctors) */}
-          <div className="bg-[#F5F5F7] rounded-[20px] sm:rounded-[28px] overflow-hidden flex flex-col justify-between h-[480px] sm:h-[540px] p-8 sm:p-10 text-center relative border border-[#D2D2D7]/40 shadow-xs">
+          <div className="bg-[#F5F5F7] rounded-[20px] sm:rounded-[28px] overflow-hidden flex flex-col justify-between p-6 sm:p-9 text-center relative border border-[#D2D2D7]/50 shadow-xs">
             <div className="relative z-10 max-w-md mx-auto">
               <span className="text-xs font-semibold uppercase tracking-widest text-[#6E6E73] block mb-2">
                 Founded by Clinicians
@@ -85,12 +85,12 @@ export function AppleTrustStorySection() {
                 Grounded in medicine.
               </h3>
               <p className="mt-2 text-sm sm:text-base text-[#6E6E73] font-normal leading-relaxed">
-                Conceived by medical doctors and clinical practitioners rooted in Bengaluru.
+                Conceived by practicing medical doctors and clinical specialists rooted in Bengaluru.
               </p>
               <div className="mt-3.5">
                 <Link
                   href="/about"
-                  className="inline-flex items-center gap-1 text-xs font-medium text-[#1D1D1F] hover:text-[#D96C68] transition-colors"
+                  className="inline-flex items-center gap-1 text-xs font-semibold text-[#1D1D1F] hover:text-[#D96C68] transition-colors"
                 >
                   <span>Meet the Doctors</span>
                   <ChevronRight className="w-3.5 h-3.5" />
@@ -99,7 +99,7 @@ export function AppleTrustStorySection() {
             </div>
 
             {/* Clean 4-doctor portrait display */}
-            <div className="grid grid-cols-4 gap-2 sm:gap-3 w-full mt-6">
+            <div className="grid grid-cols-4 gap-2 sm:gap-3 w-full mt-6 aspect-[16/9] items-center">
               {TEAM.map((doctor) => (
                 <div key={doctor.name} className="flex flex-col items-center">
                   <div className="relative aspect-square w-full rounded-xl sm:rounded-2xl overflow-hidden bg-[#FFFFFF] border border-[#D2D2D7]/60">
@@ -124,32 +124,33 @@ export function AppleTrustStorySection() {
           </div>
 
           {/* Tile 3: National Milestone (Bharat Mandapam) */}
-          <div className="bg-[#F5F5F7] rounded-[20px] sm:rounded-[28px] overflow-hidden flex flex-col justify-between h-[480px] sm:h-[540px] p-8 sm:p-10 text-center relative border border-[#D2D2D7]/40 shadow-xs">
+          <div className="bg-[#F5F5F7] rounded-[20px] sm:rounded-[28px] overflow-hidden flex flex-col justify-between p-6 sm:p-9 text-center relative border border-[#D2D2D7]/50 shadow-xs">
             <div className="relative z-10 max-w-md mx-auto">
               <span className="text-xs font-semibold uppercase tracking-widest text-[#6E6E73] block mb-2">
                 National Milestone
               </span>
               <h3 className="font-sans text-2xl sm:text-3xl font-semibold tracking-tight text-[#1D1D1F]">
-                Bharat Mandapam.
+                Bharat Mandapam, New Delhi.
               </h3>
               <p className="mt-2 text-sm sm:text-base text-[#6E6E73] font-normal leading-relaxed">
-                Unveiling the MARS Wellbeing vision on India&apos;s premier national convention stage in New Delhi.
+                Unveiling the MARS Wellbeing vision on India&apos;s premier national convention stage—sharing our commitment to accessible, clinically grounded mental health support.
               </p>
               <div className="mt-3.5">
                 <Link
                   href="/about#milestones"
-                  className="inline-flex items-center gap-1 text-xs font-medium text-[#1D1D1F] hover:text-[#D96C68] transition-colors"
+                  className="inline-flex items-center gap-1 text-xs font-semibold text-[#1D1D1F] hover:text-[#D96C68] transition-colors"
                 >
-                  <span>Explore the Journey</span>
+                  <span>Explore Milestone Details</span>
                   <ChevronRight className="w-3.5 h-3.5" />
                 </Link>
               </div>
             </div>
 
-            <div className="relative w-full h-[220px] sm:h-[260px] rounded-2xl overflow-hidden mt-6 bg-[#FFFFFF]">
+            {/* Authentic 16:9 Editorial Milestone Presentation */}
+            <div className="relative w-full aspect-[16/9] rounded-2xl overflow-hidden mt-6 bg-[#040907] border border-[#D2D2D7]/60 shadow-inner">
               <Image
                 src="/milestones/bharat-mandapam-launch.jpg"
-                alt="MARS presented at Bharat Mandapam, New Delhi"
+                alt="MARS launch presentation at Bharat Mandapam, New Delhi featuring the illuminated amphitheatre and Nataraja statue at night"
                 fill
                 loading="eager"
                 sizes="(max-width: 768px) 100vw, 50vw"
@@ -158,37 +159,49 @@ export function AppleTrustStorySection() {
             </div>
           </div>
 
-          {/* Tile 4: The Journal of Quiet Practice */}
-          <div className="bg-[#F5F5F7] rounded-[20px] sm:rounded-[28px] overflow-hidden flex flex-col justify-between h-[480px] sm:h-[540px] p-8 sm:p-10 text-center relative border border-[#D2D2D7]/40 shadow-xs">
+          {/* Tile 4: Premium Editorial Publication Showcase (Highland Care BLOOM Magazine) */}
+          <div className="bg-[#F5F5F7] rounded-[20px] sm:rounded-[28px] overflow-hidden flex flex-col justify-between p-6 sm:p-9 text-center relative border border-[#D2D2D7]/50 shadow-xs">
             <div className="relative z-10 max-w-md mx-auto">
-              <span className="text-xs font-semibold uppercase tracking-widest text-[#6E6E73] block mb-2">
-                Self-Paced Practice
-              </span>
+              <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#FFFFFF] border border-[#D2D2D7]/80 text-[10px] font-semibold uppercase tracking-widest text-[#D96C68] mb-2">
+                <span>Featured Publication • Highland Care</span>
+              </div>
               <h3 className="font-sans text-2xl sm:text-3xl font-semibold tracking-tight text-[#1D1D1F]">
-                The Journal.
+                BLOOM Magazine • Issue 01
               </h3>
               <p className="mt-2 text-sm sm:text-base text-[#6E6E73] font-normal leading-relaxed">
-                Quiet reflections with zero streaks, algorithmic feeds, or notification pressure.
+                Curated healthcare and somatic wellness publication from Highland Care Multispeciality Hospital, examining preventative health, clinical continuity, and holistic restoration.
               </p>
-              <div className="mt-3.5">
-                <Link
-                  href="/journal"
-                  className="inline-flex items-center gap-1 text-xs font-medium text-[#1D1D1F] hover:text-[#D96C68] transition-colors"
+              <div className="mt-3.5 flex flex-wrap items-center justify-center gap-2">
+                <a
+                  href="https://hcmhospital.com/wp-content/uploads/2026/09/BLOOM_Issue01_Highland_Health_Revised-1.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-semibold text-[#FFFFFF] bg-[#1D1D1F] hover:bg-[#2D2D2F] rounded-full transition-colors shadow-xs"
                 >
-                  <span>Read the Journal</span>
-                  <ChevronRight className="w-3.5 h-3.5" />
-                </Link>
+                  <span>View Publication (PDF)</span>
+                  <ArrowUpRight className="w-3.5 h-3.5" />
+                </a>
+                <a
+                  href="https://hcmhospital.com/blogs-magazines/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1 text-xs font-medium text-[#6E6E73] hover:text-[#1D1D1F] transition-colors px-2 py-1"
+                >
+                  <span>HCM Hospital Archive</span>
+                  <ArrowUpRight className="w-3 h-3" />
+                </a>
               </div>
             </div>
 
-            <div className="relative w-full h-[220px] sm:h-[260px] rounded-2xl overflow-hidden mt-6 bg-[#FFFFFF]">
+            {/* Authentic BLOOM Magazine Cover Presentation */}
+            <div className="relative w-full aspect-[16/9] rounded-2xl overflow-hidden mt-6 bg-[#0B0D18] border border-[#D2D2D7]/60 flex items-center justify-center shadow-inner">
               <Image
-                src="/images/mindful-journaling.jpg"
-                alt="Open linen journal with handwritten reflections and ceramic tea on oak table"
+                src="/images/bloom-magazine-issue-01.jpg"
+                alt="BLOOM Magazine Issue 01 cover featuring Highland Health runner emblem and wellness illumination"
                 fill
                 loading="eager"
                 sizes="(max-width: 768px) 100vw, 50vw"
-                className="object-cover object-center"
+                className="object-contain object-center p-2"
               />
             </div>
           </div>
