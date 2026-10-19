@@ -149,10 +149,10 @@ export function AppleTrustStorySection() {
             {/* Authentic 16:9 Editorial Milestone Presentation */}
             <div className="relative w-full aspect-[16/9] rounded-2xl overflow-hidden mt-6 bg-[#040907] border border-[#D2D2D7]/60 shadow-inner">
               <Image
-                src="/milestones/bharat-mandapam-launch.jpg"
+                src="/milestones/bharat-mandapam-official.jpg"
                 alt="MARS launch presentation at Bharat Mandapam, New Delhi featuring the illuminated amphitheatre and Nataraja statue at night"
                 fill
-                loading="eager"
+                priority
                 sizes="(max-width: 768px) 100vw, 50vw"
                 className="object-cover object-center"
               />
@@ -172,14 +172,21 @@ export function AppleTrustStorySection() {
                 Curated healthcare and somatic wellness publication from Highland Care Multispeciality Hospital, examining preventative health, clinical continuity, and holistic restoration.
               </p>
               <div className="mt-3.5 flex flex-wrap items-center justify-center gap-2">
+                <Link
+                  href="/journal/bloom-magazine-issue-01"
+                  className="inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-semibold text-[#FFFFFF] bg-[#1D1D1F] hover:bg-[#2D2D2F] rounded-full transition-colors shadow-xs"
+                >
+                  <span>Read Newsletter</span>
+                  <ChevronRight className="w-3.5 h-3.5" />
+                </Link>
                 <a
                   href="https://hcmhospital.com/wp-content/uploads/2026/09/BLOOM_Issue01_Highland_Health_Revised-1.pdf"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-semibold text-[#FFFFFF] bg-[#1D1D1F] hover:bg-[#2D2D2F] rounded-full transition-colors shadow-xs"
+                  className="inline-flex items-center gap-1 text-xs font-medium text-[#1D1D1F] hover:bg-[#E5E5EA] border border-[#D2D2D7] rounded-full px-3 py-1.5 transition-colors"
                 >
-                  <span>View Publication (PDF)</span>
-                  <ArrowUpRight className="w-3.5 h-3.5" />
+                  <span>PDF (24MB)</span>
+                  <ArrowUpRight className="w-3 h-3" />
                 </a>
                 <a
                   href="https://hcmhospital.com/blogs-magazines/"
@@ -187,7 +194,7 @@ export function AppleTrustStorySection() {
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-1 text-xs font-medium text-[#6E6E73] hover:text-[#1D1D1F] transition-colors px-2 py-1"
                 >
-                  <span>HCM Hospital Archive</span>
+                  <span>HCM Archive</span>
                   <ArrowUpRight className="w-3 h-3" />
                 </a>
               </div>
@@ -199,7 +206,7 @@ export function AppleTrustStorySection() {
                 src="/images/bloom-magazine-issue-01.jpg"
                 alt="BLOOM Magazine Issue 01 cover featuring Highland Health runner emblem and wellness illumination"
                 fill
-                loading="eager"
+                priority
                 sizes="(max-width: 768px) 100vw, 50vw"
                 className="object-contain object-center p-2"
               />

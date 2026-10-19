@@ -5,6 +5,16 @@ import { BookOpen, ArrowRight, Clock, Tag, ChevronRight } from "lucide-react";
 
 export const SAMPLE_ARTICLES = [
   {
+    slug: "bloom-magazine-issue-01",
+    title: "BLOOM Magazine — Issue 01: Women's Health, Prevention & Somatic Balance.",
+    category: "Official Publication",
+    readTime: "12 min read",
+    author: "Dr. Uzma Jahan • Highland Care",
+    excerpt:
+      "The inaugural health newsletter and clinical publication from Highland Care Multispecialty Hospital, examining adolescent cycle literacy, PCOS, preventative screenings, and metabolic health after 35.",
+    date: "September 2026",
+  },
+  {
     slug: "architecture-of-silence",
     title: "The Architecture of Silence: Why High-Velocity Builders Need Spaces to Disconnect.",
     category: "Grounding Practices",
@@ -126,23 +136,31 @@ export default function JournalPage() {
                 </div>
 
                 <div className="pt-4 flex flex-wrap items-center gap-3">
+                  <Link
+                    href="/journal/bloom-magazine-issue-01"
+                    className="inline-flex items-center gap-1.5 px-5 py-2.5 text-xs font-semibold text-[#FFFFFF] bg-[#D96C68] hover:bg-[#C65A57] active:scale-[0.98] rounded-full transition-all shadow-xs"
+                  >
+                    <span>Read Online Edition</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </Link>
+
                   <a
                     href="https://hcmhospital.com/wp-content/uploads/2026/09/BLOOM_Issue01_Highland_Health_Revised-1.pdf"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 px-5 py-2.5 text-xs font-semibold text-[#FFFFFF] bg-[#D96C68] hover:bg-[#C65A57] active:scale-[0.98] rounded-full transition-all shadow-xs"
+                    className="inline-flex items-center gap-1.5 px-4 py-2.5 text-xs font-semibold text-[#1D1D1F] hover:bg-[#F5F5F7] border border-[#D2D2D7] rounded-full transition-colors"
                   >
-                    <span>Read Publication (PDF)</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
+                    <span>Download PDF (24MB)</span>
+                    <ChevronRight className="w-3.5 h-3.5 text-[#6E6E73]" />
                   </a>
 
                   <a
                     href="https://hcmhospital.com/blogs-magazines/"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 px-4 py-2.5 text-xs font-medium text-[#1D1D1F] hover:bg-[#F5F5F7] border border-[#D2D2D7] rounded-full transition-colors"
+                    className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-medium text-[#6E6E73] hover:text-[#1D1D1F] transition-colors"
                   >
-                    <span>HCM Hospital Archive</span>
+                    <span>HCM Archive</span>
                     <ArrowRight className="w-3.5 h-3.5 text-[#6E6E73]" />
                   </a>
                 </div>
