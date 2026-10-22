@@ -165,18 +165,18 @@ export default function BloomMagazineIssue01Page() {
         </section>
 
         {/* Visual Break 1: Dr. Uzma Dixit Consultation Portrait */}
-        <div className="space-y-3">
-          <div className="relative aspect-[16/10] max-w-2xl mx-auto rounded-2xl overflow-hidden bg-[#F5F5F7] border border-[#D2D2D7]/80 shadow-md">
+        <div className="space-y-3 my-8">
+          <div className="relative aspect-[3/4] max-w-sm sm:max-w-md mx-auto rounded-2xl overflow-hidden bg-[#F5F5F7] border border-[#D2D2D7]/80 shadow-md">
             <Image
-              src="/images/dr-uzma-dixit-consultation.jpg"
+              src="/images/dr-uzma-dixit-portrait.jpg"
               alt="Dr. Uzma Dixit, Consultant Gynaecologist & Women's Health Specialist at Highland Care Multispecialty Hospital"
               fill
               priority
-              sizes="(max-width: 768px) 100vw, 672px"
-              className="object-contain sm:object-cover object-center"
+              sizes="(max-width: 640px) 100vw, 448px"
+              className="object-cover object-center"
             />
           </div>
-          <p className="text-xs text-[#6E6E73] text-center font-medium">
+          <p className="text-xs text-[#6E6E73] text-center font-medium max-w-md mx-auto">
             Dr. Uzma Dixit, Consultant Gynaecologist &amp; Women&apos;s Health Specialist at Highland Care Multispecialty Hospital.
           </p>
         </div>
