@@ -53,6 +53,7 @@ export function AmbientAudioToggle({
 
   const activePlaying = mounted && isPlaying;
   const activeBlocked = mounted && playbackBlocked;
+  const activeLoading = mounted && isLoading;
 
   return (
     <button
@@ -73,7 +74,7 @@ export function AmbientAudioToggle({
           : "bg-[#FFFFFF] text-[#6E6E73] hover:text-[#1D1D1F] hover:bg-[#F5F5F7]"
       } ${className}`}
     >
-      {isLoading && !activePlaying ? (
+      {activeLoading && !activePlaying ? (
         <Loader2 className="w-3.5 h-3.5 animate-spin text-[#1D1D1F] shrink-0" aria-hidden="true" />
       ) : activePlaying ? (
         <span className="inline-flex items-center gap-1.5 shrink-0" aria-hidden="true">

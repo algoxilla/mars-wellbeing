@@ -86,6 +86,7 @@ export default function BloomMagazineIssue01Page() {
                   alt="Dr. Uzma Dixit - Consultant Gynaecologist & Women's Health Specialist"
                   fill
                   priority
+                  sizes="56px"
                   className="object-cover object-center"
                 />
               </div>
@@ -119,6 +120,7 @@ export default function BloomMagazineIssue01Page() {
             alt="BLOOM Magazine Issue 01: Women's Health & Somatic Balance by Dr. Uzma Dixit"
             fill
             priority
+            sizes="(max-width: 768px) 100vw, 768px"
             className="object-cover object-center"
           />
         </div>
@@ -170,6 +172,7 @@ export default function BloomMagazineIssue01Page() {
               alt="Dr. Uzma Dixit, Consultant Gynaecologist & Women's Health Specialist at Highland Care Multispecialty Hospital"
               fill
               priority
+              sizes="(max-width: 768px) 100vw, 672px"
               className="object-contain sm:object-cover object-center"
             />
           </div>
@@ -245,6 +248,7 @@ export default function BloomMagazineIssue01Page() {
               src="/images/bloom-family-support.jpg"
               alt="Supportive family conversation about adolescent health"
               fill
+              sizes="(max-width: 768px) 100vw, 768px"
               className="object-cover object-center"
             />
           </div>
@@ -318,6 +322,7 @@ export default function BloomMagazineIssue01Page() {
               src="/images/bloom-mindful-wellness.jpg"
               alt="Mindful morning meditation and somatic breathing"
               fill
+              sizes="(max-width: 768px) 100vw, 768px"
               className="object-cover object-center"
             />
           </div>
@@ -363,6 +368,7 @@ export default function BloomMagazineIssue01Page() {
               src="/images/bloom-nutrition-bowl.jpg"
               alt="Hormone-friendly Buddha bowl with greens, seeds, and protein"
               fill
+              sizes="(max-width: 768px) 100vw, 768px"
               className="object-cover object-center"
             />
           </div>
