@@ -1,19 +1,22 @@
 
-import React, { Suspense } from "react";
+import React from "react";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
-import { CrisisBar } from "@/components/layout/CrisisBar";
-import { Header } from "@/components/layout/Header";
-import { Footer } from "@/components/layout/Footer";
 import { AmbientAudioProvider } from "@/context/AmbientAudioContext";
-import { ScrollToTopButton } from "@/components/ui/ScrollToTopButton";
-import { WelcomeModal } from "@/components/ui/WelcomeModal";
+import { SiteShell } from "@/components/layout/SiteShell";
 
 const inter = Inter({
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700"],
   variable: "--font-sans",
+  display: "swap",
+});
+
+const plusJakartaSans = Plus_Jakarta_Sans({
+  subsets: ["latin"],
+  weight: ["500", "600", "700", "800"],
+  variable: "--font-heading",
   display: "swap",
 });
 
@@ -50,22 +53,11 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} h-full scroll-smooth antialiased`}
+      className={`${inter.variable} ${plusJakartaSans.variable} h-full scroll-smooth antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-[#FFFFFF] text-[#1D1D1F] font-sans selection:bg-[#1D1D1F] selection:text-[#FFFFFF]">
+      <body className="min-h-full flex flex-col bg-[#000000] text-[#1D1D1F] font-sans selection:bg-[#1D1D1F] selection:text-[#FFFFFF]">
         <AmbientAudioProvider>
-          <CrisisBar />
-          <Suspense
-            fallback={
-              <div className="h-[44px] bg-[#FFFFFF]/85 border-b border-[#D2D2D7]/60" />
-            }
-          >
-            <Header />
-          </Suspense>
-          <main className="flex-1 flex flex-col">{children}</main>
-          <Footer />
-          <ScrollToTopButton />
-          <WelcomeModal />
+          <SiteShell>{children}</SiteShell>
         </AmbientAudioProvider>
       </body>
     </html>
