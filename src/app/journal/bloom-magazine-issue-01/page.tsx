@@ -18,16 +18,110 @@ import {
   Activity,
   ExternalLink,
 } from "lucide-react";
+import type { Metadata } from "next";
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "BLOOM Magazine • Issue 01: Women's Health & Prevention | MARS Journal",
   description:
     "Digital edition and newsletter of BLOOM Magazine Issue 01 by Highland Care Multispecialty Hospital. Clinical guidance on menstrual literacy, PCOS, preventative screenings, and metabolic health.",
+  alternates: {
+    canonical: "/journal/bloom-magazine-issue-01",
+  },
+  openGraph: {
+    title: "BLOOM Magazine • Issue 01: Women's Health & Prevention",
+    description:
+      "Digital edition and newsletter of BLOOM Magazine Issue 01 by Highland Care Multispecialty Hospital. Authored by Dr. Uzma Dixit.",
+    url: "https://www.marswellbeing.xyz/journal/bloom-magazine-issue-01",
+    siteName: "MARS Wellbeing",
+    locale: "en_IN",
+    type: "article",
+    images: [
+      {
+        url: "/images/bloom-magazine-issue-01.jpg",
+        width: 1200,
+        height: 630,
+        alt: "BLOOM Magazine Issue 01 Cover",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "BLOOM Magazine • Issue 01: Women's Health & Prevention",
+    description:
+      "Official health publication by Highland Care Hospital and MARS Wellbeing.",
+    images: ["/images/bloom-magazine-issue-01.jpg"],
+  },
+};
+
+const bloomJsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "MARS Wellbeing",
+          item: "https://www.marswellbeing.xyz",
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Journal",
+          item: "https://www.marswellbeing.xyz/journal",
+        },
+        {
+          "@type": "ListItem",
+          position: 3,
+          name: "BLOOM Magazine Issue 01",
+          item: "https://www.marswellbeing.xyz/journal/bloom-magazine-issue-01",
+        },
+      ],
+    },
+    {
+      "@type": "Article",
+      "@id": "https://www.marswellbeing.xyz/journal/bloom-magazine-issue-01#article",
+      headline: "BLOOM Magazine — Issue 01: Women's Health, Prevention & Somatic Balance",
+      description:
+        "The inaugural health newsletter and clinical publication from Highland Care Multispecialty Hospital, examining adolescent cycle literacy, PCOS, preventative screenings, and metabolic health after 35.",
+      image: "https://www.marswellbeing.xyz/images/bloom-magazine-issue-01.jpg",
+      datePublished: "2026-09-01",
+      dateModified: "2026-10-24",
+      author: {
+        "@type": "Person",
+        name: "Dr. Uzma Dixit",
+        jobTitle: "Family Physician & Women's Health Consultant",
+        affiliation: {
+          "@type": "MedicalOrganization",
+          name: "Highland Care Multispeciality Hospital",
+          url: "https://hcmhospital.com/",
+        },
+      },
+      publisher: {
+        "@type": "Organization",
+        name: "Highland Care Private Limited & MARS Wellbeing",
+        url: "https://hcmhospital.com/",
+        logo: {
+          "@type": "ImageObject",
+          url: "https://www.marswellbeing.xyz/brand/highland-care-logo.png",
+        },
+      },
+      mainEntityOfPage: {
+        "@type": "WebPage",
+        "@id": "https://www.marswellbeing.xyz/journal/bloom-magazine-issue-01",
+      },
+    },
+  ],
 };
 
 export default function BloomMagazineIssue01Page() {
   return (
     <article className="flex flex-col bg-[#FFFFFF] text-[#1D1D1F] min-h-screen">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(bloomJsonLd) }}
+      />
       {/* 1. Header Navigation Bar */}
       <div className="sticky top-14 z-20 bg-[rgba(255,255,255,0.85)] backdrop-blur-md border-b border-[#D2D2D7]/50 py-3">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 flex items-center justify-between">

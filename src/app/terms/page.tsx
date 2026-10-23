@@ -1,6 +1,24 @@
 import React from "react";
+import type { Metadata } from "next";
 import Link from "next/link";
 import { ShieldCheck, AlertCircle } from "lucide-react";
+
+export const metadata: Metadata = {
+  title: "Terms of Service — Scope, Governance & Non-Emergency Boundaries",
+  description:
+    "Terms of service, ethical guidelines, non-emergency boundaries, and legal jurisdiction in Bengaluru, Karnataka, India.",
+  alternates: {
+    canonical: "/terms",
+  },
+  openGraph: {
+    title: "Terms of Service — MARS Wellbeing",
+    description:
+      "Terms of service, ethical guidelines, non-emergency boundaries, and legal jurisdiction in Bengaluru.",
+    url: "https://www.marswellbeing.xyz/terms",
+    siteName: "MARS Wellbeing",
+    locale: "en_IN",
+  },
+};
 
 export default function TermsPage() {
   return (

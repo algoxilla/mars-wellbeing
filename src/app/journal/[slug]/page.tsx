@@ -1,4 +1,5 @@
 import React from "react";
+import type { Metadata } from "next";
 import Link from "next/link";
 import { SAMPLE_ARTICLES } from "../page";
 import { ArrowLeft, Clock, Calendar, Sparkles, ArrowRight } from "lucide-react";
@@ -8,6 +9,83 @@ export function generateStaticParams() {
   return SAMPLE_ARTICLES.map((article) => ({
     slug: article.slug,
   }));
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+
+  if (slug === "bloom-magazine-issue-01") {
+    return {
+      title: "BLOOM Magazine • Issue 01: Women's Health & Prevention | MARS Journal",
+      description:
+        "Digital edition and newsletter of BLOOM Magazine Issue 01 by Highland Care Multispecialty Hospital. Clinical guidance on menstrual literacy, PCOS, preventative screenings, and metabolic health.",
+      alternates: {
+        canonical: "/journal/bloom-magazine-issue-01",
+      },
+      openGraph: {
+        title: "BLOOM Magazine • Issue 01: Women's Health & Prevention",
+        description:
+          "Digital edition and newsletter of BLOOM Magazine Issue 01 by Highland Care Multispecialty Hospital.",
+        url: "https://www.marswellbeing.xyz/journal/bloom-magazine-issue-01",
+        siteName: "MARS Wellbeing",
+        locale: "en_IN",
+        images: [
+          {
+            url: "/images/bloom-magazine-issue-01.jpg",
+            width: 1200,
+            height: 630,
+            alt: "BLOOM Magazine Issue 01 Cover",
+          },
+        ],
+      },
+      twitter: {
+        card: "summary_large_image",
+        title: "BLOOM Magazine • Issue 01: Women's Health & Prevention",
+        description:
+          "Official health newsletter from Highland Care Hospital and MARS Wellbeing.",
+        images: ["/images/bloom-magazine-issue-01.jpg"],
+      },
+    };
+  }
+
+  const article =
+    SAMPLE_ARTICLES.find((a) => a.slug === slug) || SAMPLE_ARTICLES[0];
+
+  return {
+    title: `${article.title} | MARS Journal`,
+    description: article.excerpt,
+    alternates: {
+      canonical: `/journal/${article.slug}`,
+    },
+    openGraph: {
+      title: `${article.title} | MARS Journal`,
+      description: article.excerpt,
+      url: `https://www.marswellbeing.xyz/journal/${article.slug}`,
+      siteName: "MARS Wellbeing",
+      locale: "en_IN",
+      type: "article",
+      publishedTime: "2026-10-01T00:00:00Z",
+      authors: [article.author],
+      images: [
+        {
+          url: "/images/mindful-journaling.jpg",
+          width: 1200,
+          height: 630,
+          alt: article.title,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${article.title} | MARS Journal`,
+      description: article.excerpt,
+      images: ["/images/mindful-journaling.jpg"],
+    },
+  };
 }
 
 export default async function JournalArticlePage({
@@ -24,8 +102,67 @@ export default async function JournalArticlePage({
   const article =
     SAMPLE_ARTICLES.find((a) => a.slug === slug) || SAMPLE_ARTICLES[0];
 
+  const articleJsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "MARS Wellbeing",
+            item: "https://www.marswellbeing.xyz",
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: "Journal",
+            item: "https://www.marswellbeing.xyz/journal",
+          },
+          {
+            "@type": "ListItem",
+            position: 3,
+            name: article.title,
+            item: `https://www.marswellbeing.xyz/journal/${article.slug}`,
+          },
+        ],
+      },
+      {
+        "@type": "Article",
+        "@id": `https://www.marswellbeing.xyz/journal/${article.slug}#article`,
+        headline: article.title,
+        description: article.excerpt,
+        image: "https://www.marswellbeing.xyz/images/mindful-journaling.jpg",
+        datePublished: "2026-10-01",
+        dateModified: "2026-10-24",
+        author: {
+          "@type": "Organization",
+          name: article.author,
+          url: "https://www.marswellbeing.xyz",
+        },
+        publisher: {
+          "@type": "Organization",
+          name: "MARS Wellbeing",
+          logo: {
+            "@type": "ImageObject",
+            url: "https://www.marswellbeing.xyz/brand/mars-emblem.png",
+          },
+        },
+        mainEntityOfPage: {
+          "@type": "WebPage",
+          "@id": `https://www.marswellbeing.xyz/journal/${article.slug}`,
+        },
+      },
+    ],
+  };
+
   return (
     <article className="flex flex-col bg-[#FFFFFF] text-[#1D1D1F] min-h-screen">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
+      />
       {/* 1. Header Navigation Bar */}
       <div className="sticky top-14 z-20 bg-[rgba(255,255,255,0.85)] backdrop-blur-md border-b border-[#D2D2D7]/50 py-3">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 flex items-center justify-between">

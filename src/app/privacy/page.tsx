@@ -1,6 +1,24 @@
 import React from "react";
+import type { Metadata } from "next";
 import Link from "next/link";
 import { Lock, ShieldCheck, CheckCircle2 } from "lucide-react";
+
+export const metadata: Metadata = {
+  title: "Privacy Policy — DPDP Act 2023 Compliance & Device-Local Storage",
+  description:
+    "Our privacy pledge: local-first storage for contemplative reflections, zero third-party advertising tracking, and strict adherence to India's DPDP Act 2023.",
+  alternates: {
+    canonical: "/privacy",
+  },
+  openGraph: {
+    title: "Privacy Policy — MARS Wellbeing",
+    description:
+      "Our privacy pledge: local-first storage for contemplative reflections and zero third-party advertising tracking.",
+    url: "https://www.marswellbeing.xyz/privacy",
+    siteName: "MARS Wellbeing",
+    locale: "en_IN",
+  },
+};
 
 export default function PrivacyPage() {
   return (

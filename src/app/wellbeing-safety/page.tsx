@@ -1,4 +1,5 @@
 import React from "react";
+import type { Metadata } from "next";
 import Link from "next/link";
 import {
   ShieldAlert,
@@ -10,6 +11,23 @@ import {
   MapPin,
   ArrowRight,
 } from "lucide-react";
+
+export const metadata: Metadata = {
+  title: "Crisis Protocols & Safety Framework — Verified Helplines India",
+  description:
+    "Safety standards, ethical boundaries, and verified 24/7 emergency helplines in India including Tele-MANAS (14416), Emergency (112), and Vandrevala Foundation (+91 9999 666 555).",
+  alternates: {
+    canonical: "/wellbeing-safety",
+  },
+  openGraph: {
+    title: "Wellbeing & Safety Framework — MARS Wellbeing",
+    description:
+      "Safety standards, ethical non-emergency boundaries, and verified 24/7 emergency mental health helplines across India.",
+    url: "https://www.marswellbeing.xyz/wellbeing-safety",
+    siteName: "MARS Wellbeing",
+    locale: "en_IN",
+  },
+};
 
 export default function WellbeingSafetyPage() {
   return (

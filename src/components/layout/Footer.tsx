@@ -45,6 +45,11 @@ export function Footer() {
                 </Link>
               </li>
               <li>
+                <Link href="/journal" className="hover:text-[#1D1D1F] hover:underline transition-colors">
+                  Journal &amp; Publications
+                </Link>
+              </li>
+              <li>
                 <Link href="#explore" className="hover:text-[#1D1D1F] hover:underline transition-colors">
                   Contemplative Practice
                 </Link>

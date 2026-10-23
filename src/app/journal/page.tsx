@@ -1,7 +1,40 @@
 import React from "react";
+import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { BookOpen, ArrowRight, Clock, Tag, ChevronRight } from "lucide-react";
+
+export const metadata: Metadata = {
+  title: "The Journal of Quiet Practice — Publications & Contemplations",
+  description:
+    "Thoughtful essays, somatic inquiries, and official healthcare publications from MARS Wellbeing and Highland Care Hospital. Exploring cognitive preservation and autonomic pacing.",
+  alternates: {
+    canonical: "/journal",
+  },
+  openGraph: {
+    title: "The Journal of Quiet Practice — MARS Wellbeing",
+    description:
+      "Essays, somatic inquiries, and healthcare publications from MARS Wellbeing and Highland Care.",
+    url: "https://www.marswellbeing.xyz/journal",
+    siteName: "MARS Wellbeing",
+    locale: "en_IN",
+    images: [
+      {
+        url: "/images/mindful-journaling.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Open journal and tea cup bathed in natural morning light",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "The Journal of Quiet Practice — MARS Wellbeing",
+    description:
+      "Essays and healthcare publications from MARS Wellbeing and Highland Care.",
+    images: ["/images/mindful-journaling.jpg"],
+  },
+};
 
 export const SAMPLE_ARTICLES = [
   {
@@ -200,7 +233,12 @@ export default function JournalPage() {
                   </div>
 
                   <h3 className="font-sans text-xl font-semibold text-[#1D1D1F] mt-4 leading-snug">
-                    {article.title}
+                    <Link
+                      href={`/journal/${article.slug}`}
+                      className="hover:text-[#D96C68] transition-colors focus:outline-none focus-visible:underline"
+                    >
+                      {article.title}
+                    </Link>
                   </h3>
 
                   <p className="text-xs text-[#6E6E73] mt-2 leading-relaxed">
@@ -210,10 +248,14 @@ export default function JournalPage() {
 
                 <div className="pt-6 mt-6 border-t border-[#D2D2D7]/60 flex items-center justify-between text-xs">
                   <span className="text-[#6E6E73]">{article.date}</span>
-                  <span className="inline-flex items-center gap-1 font-semibold text-[#1D1D1F] hover:text-[#D96C68] transition-colors">
+                  <Link
+                    href={`/journal/${article.slug}`}
+                    className="inline-flex items-center gap-1 font-semibold text-[#1D1D1F] hover:text-[#D96C68] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#D96C68] rounded py-1 px-1.5 -mr-1.5"
+                    aria-label={`Read article: ${article.title}`}
+                  >
                     <span>Read Article</span>
                     <ChevronRight className="w-3.5 h-3.5 text-[#D96C68]" />
-                  </span>
+                  </Link>
                 </div>
               </div>
             ))}

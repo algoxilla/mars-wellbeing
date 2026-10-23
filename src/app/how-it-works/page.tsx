@@ -1,4 +1,5 @@
 import React from "react";
+import type { Metadata } from "next";
 import Link from "next/link";
 import { DevelopmentNotice } from "@/components/ui/DevelopmentNotice";
 import {
@@ -12,6 +13,23 @@ import {
   HeartHandshake,
   HelpCircle,
 } from "lucide-react";
+
+export const metadata: Metadata = {
+  title: "The Navigation Framework — How MARS Wellbeing Works",
+  description:
+    "Explore the three interconnected spaces of MARS: Nova Hikari private practices, facilitated Bengaluru community circles, and accredited clinical healthcare continuity.",
+  alternates: {
+    canonical: "/how-it-works",
+  },
+  openGraph: {
+    title: "How MARS Works — The Unhurried Architecture of Care",
+    description:
+      "Three interconnected spaces: Nova Hikari private practices, community circles, and clinical care in Bengaluru.",
+    url: "https://www.marswellbeing.xyz/how-it-works",
+    siteName: "MARS Wellbeing",
+    locale: "en_IN",
+  },
+};
 
 export default function HowItWorksPage() {
   return (

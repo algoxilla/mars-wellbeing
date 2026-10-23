@@ -229,13 +229,20 @@ export default function NovaHikariPage() {
           <p className="text-base sm:text-lg text-[#6E6E73] max-w-xl mx-auto">
             Experience Stage 01: Origin right now. Settle into a quiet room, take three slow breaths, and listen to where you stand.
           </p>
-          <div className="pt-2">
+          <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3">
             <Link
               href="/guided-experience"
               className="inline-flex items-center justify-center px-7 py-3 text-sm font-medium text-[#FFFFFF] bg-[#D96C68] hover:bg-[#C65A57] active:scale-[0.98] rounded-full transition-all shadow-xs"
             >
               <span>Open Stage 01 (Origin)</span>
               <ArrowRight className="w-4 h-4 ml-2" />
+            </Link>
+            <Link
+              href="/about"
+              className="inline-flex items-center justify-center px-6 py-3 text-sm font-medium text-[#1D1D1F] hover:bg-[#FFFFFF] border border-[#D2D2D7] active:scale-[0.98] rounded-full transition-all"
+            >
+              <span>Clinical Origins & Philosophy</span>
+              <ArrowRight className="w-3.5 h-3.5 ml-2" />
             </Link>
           </div>
         </div>

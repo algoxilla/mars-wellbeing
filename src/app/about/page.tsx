@@ -1,4 +1,5 @@
 import React from "react";
+import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import {
@@ -11,6 +12,38 @@ import {
   Compass,
   Award,
 } from "lucide-react";
+
+export const metadata: Metadata = {
+  title: "Clinical Story & Origins — Restoring Stillness to Ambition",
+  description:
+    "Founded by practicing physicians in Bengaluru, MARS combines hospital-grade clinical governance with human-centered wellbeing design. Unveiled on the national stage at Bharat Mandapam, New Delhi.",
+  alternates: {
+    canonical: "/about",
+  },
+  openGraph: {
+    title: "Clinical Story & Origins — Restoring Stillness to Ambition | MARS Wellbeing",
+    description:
+      "Founded by practicing physicians in Bengaluru. Unveiled at Bharat Mandapam, New Delhi in partnership with Highland Care.",
+    url: "https://www.marswellbeing.xyz/about",
+    siteName: "MARS Wellbeing",
+    locale: "en_IN",
+    images: [
+      {
+        url: "/milestones/bharat-mandapam-official.jpg",
+        width: 1200,
+        height: 630,
+        alt: "MARS launch presentation at Bharat Mandapam, New Delhi",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Clinical Story & Origins — Restoring Stillness to Ambition | MARS Wellbeing",
+    description:
+      "Founded by practicing physicians in Bengaluru. Unveiled at Bharat Mandapam, New Delhi.",
+    images: ["/milestones/bharat-mandapam-official.jpg"],
+  },
+};
 
 const TEAM = [
   {
@@ -106,7 +139,28 @@ export default function AboutPage() {
             MARS was conceived to create deliberate counter-spaces: physical and digital environments where individuals can step out of performance mode, regulate their nervous systems, and connect with qualified support without fear of judgment.
           </p>
           <p>
-            We combine <strong>Nova Hikari</strong> (a private 10-stage guided journey), <strong>Community Circles</strong> (small, facilitator-held gatherings in Bengaluru), and <strong>Clinical Therapy</strong> (licensed psychologists and hospital partners).
+            We combine{" "}
+            <Link
+              href="/nova-hikari"
+              className="font-semibold text-[#1D1D1F] underline decoration-[#D96C68]/60 hover:text-[#D96C68] transition-colors"
+            >
+              Nova Hikari
+            </Link>{" "}
+            (a private 10-stage guided journey),{" "}
+            <Link
+              href="/community"
+              className="font-semibold text-[#1D1D1F] underline decoration-[#D96C68]/60 hover:text-[#D96C68] transition-colors"
+            >
+              Community Circles
+            </Link>{" "}
+            (small, facilitator-held gatherings in Bengaluru), and{" "}
+            <Link
+              href="/professionals"
+              className="font-semibold text-[#1D1D1F] underline decoration-[#D96C68]/60 hover:text-[#D96C68] transition-colors"
+            >
+              Clinical Care
+            </Link>{" "}
+            (licensed psychologists and hospital partners).
           </p>
         </div>
       </section>
@@ -155,6 +209,17 @@ export default function AboutPage() {
                 </div>
               </div>
             ))}
+          </div>
+
+          {/* Reciprocal Link to Clinical Care Directory */}
+          <div className="mt-10 pt-6 border-t border-[#D2D2D7]/60 text-center">
+            <Link
+              href="/professionals"
+              className="inline-flex items-center gap-2 px-6 py-3 text-xs font-semibold text-[#1D1D1F] hover:text-[#D96C68] bg-[#F5F5F7] hover:bg-[#EBEBEF] border border-[#D2D2D7] rounded-full transition-all shadow-xs"
+            >
+              <span>Explore Clinical Care Directory & Consultations</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </Link>
           </div>
         </div>
       </section>
@@ -214,13 +279,20 @@ export default function AboutPage() {
           <p className="text-base text-[#6E6E73]">
             Explore Nova Hikari self-guided practices or join a facilitated Bengaluru circle.
           </p>
-          <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3">
+          <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-3">
             <Link
-              href="/#early-access"
+              href="/nova-hikari"
               className="inline-flex items-center gap-2 px-6 py-3 text-xs font-semibold text-[#FFFFFF] bg-[#D96C68] hover:bg-[#C65A57] rounded-full transition-colors shadow-xs"
             >
-              <span>Join Early Access</span>
+              <span>Explore Nova Hikari (10 Stages)</span>
               <ArrowRight className="w-4 h-4" />
+            </Link>
+            <Link
+              href="/professionals"
+              className="inline-flex items-center gap-2 px-5 py-3 text-xs font-medium text-[#1D1D1F] hover:bg-[#F5F5F7] border border-[#D2D2D7] rounded-full transition-colors"
+            >
+              <span>Clinical Care Directory</span>
+              <ArrowRight className="w-3.5 h-3.5" />
             </Link>
             <a
               href="tel:+919006219668"

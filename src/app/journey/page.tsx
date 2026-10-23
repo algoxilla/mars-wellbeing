@@ -1,7 +1,25 @@
 import React from "react";
+import type { Metadata } from "next";
 import Link from "next/link";
 import { NOVA_HIKARI_STAGES } from "@/content/nova-hikari-stages";
 import { ArrowRight, CheckCircle2, ChevronRight, Compass } from "lucide-react";
+
+export const metadata: Metadata = {
+  title: "My Sanctuary Journey — Nova Hikari Stage Tracker",
+  description:
+    "Track your progress across the 10 stages of Nova Hikari. Revisit contemplative inquiries and somatic breath resets.",
+  alternates: {
+    canonical: "/journey",
+  },
+  openGraph: {
+    title: "My Sanctuary Journey — Nova Hikari Stage Tracker | MARS Wellbeing",
+    description:
+      "Track your progress across the 10 stages of Nova Hikari. Revisit contemplative inquiries and somatic breath resets.",
+    url: "https://www.marswellbeing.xyz/journey",
+    siteName: "MARS Wellbeing",
+    locale: "en_IN",
+  },
+};
 
 export default function MemberJourneyPage() {
   return (

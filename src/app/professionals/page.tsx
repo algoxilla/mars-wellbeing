@@ -94,7 +94,14 @@ export default function ClinicalCarePage() {
             Contemplative practices provide space to breathe, but they do not replace clinical diagnosis. In partnership with Highland Care Private Limited, MARS offers clear, verified pathways to accredited psychiatrists, clinical psychologists, and hospital care.
           </p>
 
-          <div className="mt-6 flex flex-row items-center justify-center gap-3 sm:gap-4">
+          <div className="mt-6 flex flex-row flex-wrap items-center justify-center gap-3 sm:gap-4">
+            <Link
+              href="/about"
+              className="inline-flex items-center justify-center px-5 py-2.5 text-sm font-medium text-[#1D1D1F] hover:bg-[#F5F5F7] border border-[#D2D2D7] active:scale-[0.98] rounded-full transition-all"
+            >
+              <span>Read Clinical Story & Origins</span>
+              <ArrowRight className="w-3.5 h-3.5 ml-1.5" />
+            </Link>
             <a
               href="https://hcmhospital.com/"
               target="_blank"

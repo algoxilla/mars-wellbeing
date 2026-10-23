@@ -1,4 +1,5 @@
 import React from "react";
+import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import {
@@ -11,6 +12,38 @@ import {
   Phone,
   CheckCircle2,
 } from "lucide-react";
+
+export const metadata: Metadata = {
+  title: "Bengaluru Community Circles — Small-Group Wellbeing",
+  description:
+    "Facilitator-held wellbeing circles across Indiranagar, Koramangala, and virtual spaces in Bengaluru. Safe, unhurried gatherings for cognitive pacing and honest connection.",
+  alternates: {
+    canonical: "/community",
+  },
+  openGraph: {
+    title: "Bengaluru Community Circles — Small-Group Wellbeing | MARS Wellbeing",
+    description:
+      "Facilitator-held wellbeing circles across Indiranagar, Koramangala, and virtual spaces in Bengaluru.",
+    url: "https://www.marswellbeing.xyz/community",
+    siteName: "MARS Wellbeing",
+    locale: "en_IN",
+    images: [
+      {
+        url: "/images/community-circle.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Bengaluru Community Circle Gathering",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Bengaluru Community Circles — Small-Group Wellbeing | MARS Wellbeing",
+    description:
+      "Facilitator-held wellbeing circles across Indiranagar, Koramangala, and virtual spaces in Bengaluru.",
+    images: ["/images/community-circle.jpg"],
+  },
+};
 
 const COMMUNITY_CIRCLES = [
   {
